@@ -1,10 +1,10 @@
 "use client";
 
+import { Suspense } from "react";
 import { useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { BookOpen, Eye, EyeOff, Lock, Key } from "lucide-react";
-import { Suspense } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -19,6 +19,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export default function ResetPasswordPage() {
+  return (
+    <Suspense>
+      <ResetPasswordContent />
+    </Suspense>
+  );
+}
+
+function ResetPasswordContent() {
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
 
@@ -95,8 +103,7 @@ export default function ResetPasswordPage() {
 
   if (!email) {
     return (
-      <Suspense>
-<div className="container flex h-screen w-screen flex-col items-center justify-center">
+      <div className="container flex h-screen w-screen flex-col items-center justify-center">
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
           <Card>
             <CardHeader>
@@ -113,9 +120,6 @@ export default function ResetPasswordPage() {
           </Card>
         </div>
       </div>
-
-      </Suspense>
-      
     );
   }
 
@@ -220,7 +224,9 @@ export default function ResetPasswordPage() {
                       <Eye className="h-4 w-4 text-muted-foreground" />
                     )}
                     <span className="sr-only">
-                      {showConfirmPassword ? "Hide password" : "Show password"}
+                      {showConfirmPassword
+                        ? "Hide password"
+                        : "Show password"}
                     </span>
                   </Button>
                 </div>
