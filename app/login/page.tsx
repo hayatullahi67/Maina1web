@@ -81,7 +81,7 @@ export default function LoginPage() {
     setLoading(true);
     setError(""); // Reset error before new login attempt
   
-    const loginData = { email, password, userType };
+    const loginData = { email: email.toLowerCase(), password, userType };
   
     try {
       const res = await fetch("https://api.a1schools.org/auth/login", {
@@ -124,7 +124,7 @@ export default function LoginPage() {
     setLoading(true);
     setError("");
   
-    const loginData = { email, password };
+    const loginData = { email: email.toLowerCase(), password };
     console.log('Login Data:', loginData);
   
     try {
