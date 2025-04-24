@@ -35,31 +35,87 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@/components/ui/sider";
-type Student = {
+import { CourseDetail } from "./course-detail";
+
+export interface Category {
+  name: string;
+}
+
+export interface Instructor {
   fullname: string;
+  image_link: string;
+}
+
+export interface Student {
+  id: string;
+  fullname: string;
+  verified: boolean;
+  categories: Category[];
+  image_link: string;
   email: string;
   token: string;
-  id: string;
-};
+}
 
-type Course = {
+export interface Option {
+  value: string;
   id: string;
-  name: string;
-  instructor: {
-    fullname: string;
-    image_link: string;
-  };
-  image_link: string;
-  price: string;
-  updated_at: string;
+  answer?: boolean;
+}
+
+export interface Question {
+  question: string;
+  quiz_id: string;
+  id: string;
+  options: Option[];
+}
+
+export interface Quiz {
+  module_id: string;
+  questions: Question[];
+  id: string;
+}
+
+export interface Lesson {
+  title: string;
   description: string;
-  discount: string;
+  duration: string;
+  module_id: string;
+  video_link: string;
+  id: string;
+}
+
+export interface Module {
+  title: string;
+  description: string;
+  course_id: string;
+  id: string;
+  completed: boolean;
+  lessons: Lesson[];
+  quiz: Quiz[] | null;
+}
+
+export interface Course {
+  name: string;
+  description: string;
+  price: string;
+  id: string;
+  instructor_id: string;
+  instructor: Instructor;
+  average_rating: string | null;
+  category: Category[];
   created_at: string;
-  progress: number;
-  completedLessons: number;
-  totalLessons: number;
-  category: string;
-};
+  updated_at: string;
+  image_link: string;
+  students: Student[] | null;
+  discount: string;
+  modules: Module[];
+  enrolled: boolean | null;
+  rating: number | string;
+  reviews: number | string;
+  isBestseller?: boolean;
+  completionStatus: string;
+  percentComplete: string;
+}
 
 type AllCourse = {
   id: string;
@@ -106,10 +162,14 @@ export default function StudentDashboard() {
     email: "",
     id: "",
     token: "",
+    verified: false,
+    categories: [],
+    image_link: "",
   });
   const [courses, setCourses] = useState<Course[]>([]);
   const [allcourses, setallCourses] = useState<AllCourse[]>([]);
-  const [courseId, setCourseid] = useState();
+  const [courseId, setCourseid] = useState<string[]>([]);
+  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [certificates, setCertificates] = useState<{ [courseId: string]: any }>(
     {}
   );
@@ -129,6 +189,9 @@ export default function StudentDashboard() {
         email: parsed.email || "",
         id: parsed.id,
         token: parsed.token,
+        verified: parsed.verified,
+        categories: parsed.categories,
+        image_link: parsed.image_link,
       });
     }
   }, []);
@@ -517,49 +580,10 @@ export default function StudentDashboard() {
           <div className="mt-8">
             <Tabs defaultValue="in-progress">
               <TabsList className="mb-4">
-                <TabsTrigger
-                  value="in-progress"
-                  className="
-                         
-               
-      data-[state=active]:bg-blue   
-      data-[state=active]:text-white    
-      rounded-md                        
-      px-4 py-2                          
-      transition-colors                
-    "
-                >
-                  In Progress
-                </TabsTrigger>
-                <TabsTrigger
-                  value="completed"
-                  className="
-     
-     
-      data-[state=active]:bg-blue
-      data-[state=active]:text-white
-      rounded-md
-      px-4 py-2
-      transition-colors
-    "
-                >
-                  Completed
-                </TabsTrigger>
-                <TabsTrigger
-                  value="recommended"
-                  className="
-   
-      data-[state=active]:bg-blue
-      data-[state=active]:text-white
-      rounded-md
-      px-4 py-2
-      transition-colors
-    "
-                >
-                  Recommended
-                </TabsTrigger>
+                <TabsTrigger value="in-progress">In Progress</TabsTrigger>
+                <TabsTrigger value="completed">Completed</TabsTrigger>
+                <TabsTrigger value="recommended">Recommended</TabsTrigger>
               </TabsList>
-
               <TabsContent value="in-progress">
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                   {courses.length === 0 ? (
@@ -595,16 +619,23 @@ export default function StudentDashboard() {
                               Progress
                             </span>
                             <span className="text-sm font-medium">
-                              {course.progress}%
+                              {course.percentComplete}%
                             </span>
                           </div>
-                          <Progress value={course.progress} className="h-2" />
+                          <Progress
+                            value={parseInt(course.percentComplete)}
+                            className="h-2"
+                          />
                           <div className="mt-4 flex items-center justify-between">
                             <span className="text-sm text-muted-foreground">
-                              {course.completedLessons} / {course.totalLessons}{" "}
-                              lessons
+                              {course.completionStatus}
                             </span>
-                            <Button size="sm">Continue</Button>
+                            <Button
+                              size="sm"
+                              onClick={() => setSelectedCourse(course)}
+                            >
+                              Continue
+                            </Button>
                           </div>
                         </CardContent>
                       </Card>
@@ -652,6 +683,7 @@ export default function StudentDashboard() {
                                 {course.average_rating}
                               </span>
                             </div>
+
                             <Button size="sm" variant="outline">
                               View Certificate
                             </Button>
@@ -720,6 +752,12 @@ export default function StudentDashboard() {
           </div>
         </div>
       </div>
+      {selectedCourse && (
+        <CourseDetail
+          course={selectedCourse}
+          onClose={() => setSelectedCourse(null)}
+        />
+      )}
     </SidebarProvider>
   );
 }
