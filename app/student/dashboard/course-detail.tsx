@@ -135,9 +135,10 @@ export function CourseDetail({ course, onClose }: CourseDetailProps) {
 
           if (quizResponse.ok) {
             const quizData = await quizResponse.json();
-            if (quizData.data && quizData.data.length > 0) {
-              quizzesData[moduleItem.id] = quizData.data[0];
-            }
+            // if (quizData.data && quizData.data.length > 0) {
+            //   quizzesData[moduleItem.id] = quizData.data[0];
+            // }
+            console.log("quiz", quizData)
           }
         }
         setQuizzes(quizzesData);

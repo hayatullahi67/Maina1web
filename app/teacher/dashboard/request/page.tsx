@@ -1,4 +1,732 @@
 
+// // 'use client'
+
+
+// // import { useEffect, useState } from "react";
+// // // import { toast } from "react-hot-toast";
+// // import { toast, ToastContainer } from "react-toastify";
+
+// // interface Bank {
+// //   id: number;
+// //   code: string;
+// //   name: string;
+// // }
+
+// // interface Instructor {
+// //   fullname: string;
+// //   email: string;
+// //   id: string;
+// //   token: string;
+// //   wallet: {
+// //     balance: string;
+// //   };
+// // }
+
+// // const RequestPayOut = () => {
+// //   // const [banks, setBanks] = useState<Bank[]>([]);
+// //   const [banks, setBanks] = useState<Bank[]>([]);
+// //   const [filteredBanks, setFilteredBanks] = useState<Bank[]>([]);
+// //   const [isLoading, setIsLoading] = useState(false);
+// //   const [selectedBank, setSelectedBank] = useState<Bank | null>(null);
+// //   const [accountNumber, setAccountNumber] = useState("");
+// //   const [bankSearchQuery, setBankSearchQuery] = useState("");
+// //   const [showDropdown, setShowDropdown] = useState(false);
+// //   const [instructor, setInstructor] = useState<Instructor>({
+// //     fullname: "Loading...",
+// //     email: "",
+// //     id: "",
+// //     token: "",
+// //     wallet: {
+// //       balance: "0.00" // Default value
+// //     }
+// //   });
+
+// //   // Fetch instructor data from localStorage
+// //   useEffect(() => {
+// //     const stored = localStorage.getItem("userData");
+// //     console.log("stored", stored);
+// //     if (stored) {
+// //       const parsed = JSON.parse(stored);
+// //       console.log("parsed", parsed);
+// //       setInstructor({
+// //         fullname: parsed.fullname || "Student",
+// //         email: parsed.email || "",
+// //         id: parsed.id,
+// //         token: parsed.token,
+// //         wallet: parsed.wallet
+// //       });
+// //     }
+// //   }, []);
+
+// //   // Fetch banks from API
+// //   // useEffect(() => {
+// //   //   const fetchBanks = async () => {
+// //   //     try {
+// //   //       setIsLoading(true);
+// //   //       const response = await fetch("https://api.a1schools.org/utility/get-banks");
+// //   //       if (!response.ok) {
+// //   //         toast.error("Failed to fetch banks");
+// //   //       }
+// //   //       const data = await response.json();
+// //   //       setBanks(data);
+// //   //       setFilteredBanks(data);
+// //   //     } catch (error) {
+// //   //       console.error("Error fetching banks:", error);
+// //   //       toast.error("Failed to load banks. Please refresh the page.");
+// //   //     } finally {
+// //   //       setIsLoading(false);
+// //   //     }
+// //   //   };
+
+// //   //   fetchBanks();
+// //   // }, []);
+
+// //   // Fetch banks from API
+// // useEffect(() => {
+// //   const fetchBanks = async () => {
+// //     try {
+// //       setIsLoading(true);
+// //       const response = await fetch("https://api.a1schools.org/utility/get-banks");
+      
+// //       if (!response.ok) {
+// //         toast.error("Failed to fetch banks");
+// //         return;
+// //       }
+
+// //       const responseData = await response.json();
+      
+// //       // Check if response has data array
+// //       if (Array.isArray(responseData.data)) {
+// //         setBanks(responseData.data);
+// //         setFilteredBanks(responseData.data);
+// //       } else {
+// //         toast.error("Unexpected banks format");
+// //         setBanks([]);
+// //       }
+      
+// //     } catch (error) {
+// //       console.error("Error fetching banks:", error);
+// //       toast.error("Failed to load banks. Please refresh the page.");
+// //       setBanks([]);
+// //     } finally {
+// //       setIsLoading(false);
+// //     }
+// //   };
+
+// //   fetchBanks();
+// // }, []);
+
+// //   // Filter banks based on search query
+// //   // useEffect(() => {
+// //   //   // const filtered = banks.filter(bank => 
+// //   //   //   bank.name.toLowerCase().includes(bankSearchQuery.toLowerCase())
+// //   //   // );
+// //   //   const filtered = banks?.filter(bank => 
+// //   //     bank.name.toLowerCase().includes(bankSearchQuery.toLowerCase())
+// //   //   ) || [];
+// //   //   setFilteredBanks(filtered);
+// //   // }, [bankSearchQuery, banks]);
+
+// //   useEffect(() => {
+// //     const filtered = (Array.isArray(banks) ? banks.filter(bank => 
+// //       bank.name.toLowerCase().includes(bankSearchQuery.toLowerCase())
+// //     ) : [])
+// //     setFilteredBanks(filtered);
+// //   }, [bankSearchQuery, banks]);
+
+// //   const handleBankSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+// //     setBankSearchQuery(e.target.value);
+// //     setShowDropdown(true);
+// //   };
+
+// //   const selectBank = (bank: Bank) => {
+// //     setSelectedBank(bank);
+// //     setBankSearchQuery(bank.name);
+// //     setShowDropdown(false);
+// //   };
+
+// //   const handleAccountNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+// //     setAccountNumber(e.target.value);
+// //   };
+
+// //   const handleAddBank = async () => {
+
+// //    // Check if account number is exactly 10 digits
+// //   if (accountNumber.length < 10) {
+// //     toast.error("Account number must be 10 digits");
+// //     return;
+// //   }
+  
+// //   if (accountNumber.length > 10) {
+// //     toast.error("Account number must be 10 digits");
+// //     return;
+// //   }
+
+// //     if (!accountNumber || !selectedBank) {
+// //       toast.error("Please enter your account number and select a bank");
+// //       return;
+// //     }
+    
+// //     try {
+// //       setIsLoading(true);
+// //       const payload = {
+// //         account_bank: selectedBank.code,
+// //         account_number: accountNumber,
+// //         currency: "NGN"
+// //       };
+
+// //       const response = await fetch(
+// //         `https://api.a1schools.org/instructors/${instructor.id}/bank-account`,
+// //         {
+// //           method: "POST",
+// //           headers: {
+// //             "Content-Type": "application/json",
+// //             "Authorization": `Bearer ${instructor.token}`
+// //           },
+// //           body: JSON.stringify(payload)
+// //         }
+// //       );
+
+// //       if (!response.ok) {
+// //         throw new Error("Failed to add bank account");
+// //       }
+    
+
+// //       toast.success("Bank account added successfully");
+// //       setAccountNumber("");
+// //       setBankSearchQuery("");
+// //       setSelectedBank(null);
+// //     } catch (error) {
+// //       console.error("Error adding bank account:", error);
+// //       toast.error("Failed to add bank account. Please try again.");
+// //     } finally {
+// //       setIsLoading(false);
+// //     }
+// //   };
+
+// //   const isFormValid = accountNumber.trim().length > 0 && selectedBank !== null;
+
+// //   return (
+// //     <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
+// //       <ToastContainer />
+// //       <h2 className="text-xl font-semibold mb-6">Add Bank Account</h2>
+      
+// //       <div className="mb-4">
+// //         <label htmlFor="accountNumber" className="block text-sm font-medium text-gray-700 mb-1">
+// //           Account Number
+// //         </label>
+// //         <input
+// //           type="text"
+// //           id="accountNumber"
+// //           value={accountNumber}
+// //           onChange={handleAccountNumberChange}
+// //           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+// //           placeholder="Enter your account number"
+// //           maxLength={10}
+// //         />
+// //       </div>
+
+// //       <div className="mb-6 relative">
+// //         <label htmlFor="bankSearch" className="block text-sm font-medium text-gray-700 mb-1">
+// //           Search Bank
+// //         </label>
+// //         <input
+// //           type="text"
+// //           id="bankSearch"
+// //           value={bankSearchQuery}
+// //           onChange={handleBankSearch}
+// //           onFocus={() => setShowDropdown(true)}
+// //           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+// //           placeholder="Search for your bank..."
+// //           disabled={isLoading || banks.length === 0}
+// //         />
+        
+// //         {showDropdown && (
+// //           <div className="absolute z-10 w-full mt-1 max-h-60 overflow-auto bg-white border border-gray-300 rounded-md shadow-lg">
+// //             {filteredBanks.length > 0 ? (
+// //               filteredBanks.map((bank) => (
+// //                 <div
+// //                   key={bank.id}
+// //                   className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+// //                   onClick={() => selectBank(bank)}
+// //                 >
+// //                   {bank.name}
+// //                 </div>
+// //               ))
+// //             ) : (
+// //               <div className="px-4 py-2 text-gray-500">No banks found</div>
+// //             )}
+// //           </div>
+// //         )}
+// //       </div>
+
+// //       <button
+// //         onClick={handleAddBank}
+// //         disabled={!isFormValid || isLoading}
+// //         className={`w-full py-2 px-4 rounded-md font-medium text-white ${
+// //           isFormValid && !isLoading
+// //             ? "bg-[blue] hover:bg-blue-700"
+// //             : "bg-[gray] cursor-not-allowed"
+// //         }`}
+// //       >
+// //         {isLoading ? "Adding..." : "Add Bank"}
+// //       </button>
+// //     </div>
+// //   );
+// // };
+
+// // export default RequestPayOut;
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 'use client'
+
+// import { useEffect, useState } from "react";
+// import { toast, ToastContainer } from "react-toastify";
+
+// interface Bank {
+//   id: number;
+//   code: string;
+//   name: string;
+// }
+
+// interface Instructor {
+//   fullname: string;
+//   email: string;
+//   id: string;
+//   token: string;
+//   wallet: {
+//     balance: string;
+//   };
+// }
+
+// const RequestPayOut = () => {
+//   const [banks, setBanks] = useState<Bank[]>([]);
+//   const [filteredBanks, setFilteredBanks] = useState<Bank[]>([]);
+//   const [isLoading, setIsLoading] = useState(false);
+//   const [selectedBank, setSelectedBank] = useState<Bank | null>(null);
+//   const [accountNumber, setAccountNumber] = useState("");
+//   const [bankSearchQuery, setBankSearchQuery] = useState("");
+//   const [showDropdown, setShowDropdown] = useState(false);
+  
+//   // New state for payout request
+//   const [payoutAmount, setPayoutAmount] = useState("");
+//   const [hasBankAccount, setHasBankAccount] = useState(false);
+//   const [isCheckingBank, setIsCheckingBank] = useState(true);
+//   const [isPayoutLoading, setIsPayoutLoading] = useState(false);
+  
+//   const [instructor, setInstructor] = useState<Instructor>({
+//     fullname: "Loading...",
+//     email: "",
+//     id: "",
+//     token: "",
+//     wallet: {
+//       balance: "0.00" // Default value
+//     }
+//   });
+
+//   // Fetch instructor data from localStorage
+//   useEffect(() => {
+//     const stored = localStorage.getItem("userData");
+//     console.log("stored", stored);
+//     if (stored) {
+//       const parsed = JSON.parse(stored);
+//       console.log("parsed", parsed);
+//       setInstructor({
+//         fullname: parsed.fullname || "Student",
+//         email: parsed.email || "",
+//         id: parsed.id,
+//         token: parsed.token,
+//         wallet: parsed.wallet
+//       });
+//     }
+//   }, []);
+
+//   // Check if instructor has a bank account
+//   useEffect(() => {
+//     const checkBankAccount = async () => {
+//       if (!instructor.id || !instructor.token) return;
+      
+//       try {
+//         setIsCheckingBank(true);
+//         const response = await fetch(
+//           `https://api.a1schools.org/instructors/${instructor.id}/bank-account`,
+//           {
+//             method: "GET",
+//             headers: {
+//               "Authorization": `Bearer ${instructor.token}`
+//             }
+//           }
+//         );
+        
+//         if (response.ok) {
+//           setHasBankAccount(true);
+//         } else {
+//           setHasBankAccount(false);
+//         }
+//       } catch (error) {
+//         console.error("Error checking bank account:", error);
+//         setHasBankAccount(false);
+//       } finally {
+//         setIsCheckingBank(false);
+//       }
+//     };
+
+//     if (instructor.id) {
+//       checkBankAccount();
+//     }
+//   }, [instructor.id, instructor.token]);
+
+//   // Fetch banks from API
+//   useEffect(() => {
+//     const fetchBanks = async () => {
+//       try {
+//         setIsLoading(true);
+//         const response = await fetch("https://api.a1schools.org/utility/get-banks");
+        
+//         if (!response.ok) {
+//           toast.error("Failed to fetch banks");
+//           return;
+//         }
+
+//         const responseData = await response.json();
+        
+//         // Check if response has data array
+//         if (Array.isArray(responseData.data)) {
+//           setBanks(responseData.data);
+//           setFilteredBanks(responseData.data);
+//         } else {
+//           toast.error("Unexpected banks format");
+//           setBanks([]);
+//         }
+        
+//       } catch (error) {
+//         console.error("Error fetching banks:", error);
+//         toast.error("Failed to load banks. Please refresh the page.");
+//         setBanks([]);
+//       } finally {
+//         setIsLoading(false);
+//       }
+//     };
+
+//     fetchBanks();
+//   }, []);
+
+//   useEffect(() => {
+//     const filtered = (Array.isArray(banks) ? banks.filter(bank => 
+//       bank.name.toLowerCase().includes(bankSearchQuery.toLowerCase())
+//     ) : [])
+//     setFilteredBanks(filtered);
+//   }, [bankSearchQuery, banks]);
+
+//   const handleBankSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     setBankSearchQuery(e.target.value);
+//     setShowDropdown(true);
+//   };
+
+//   const selectBank = (bank: Bank) => {
+//     setSelectedBank(bank);
+//     setBankSearchQuery(bank.name);
+//     setShowDropdown(false);
+//   };
+
+//   const handleAccountNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     // Only allow digits
+//     const value = e.target.value.replace(/\D/g, '');
+//     setAccountNumber(value);
+//   };
+
+//   const handlePayoutAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     // Only allow digits and decimal point
+//     const value = e.target.value.replace(/[^\d]/g, '');
+//     setPayoutAmount(value);
+//   };
+
+//   const handleAddBank = async () => {
+//     // Check if account number is exactly 10 digits
+//     if (accountNumber.length < 10) {
+//       toast.error("Account number must be 10 digits");
+//       return;
+//     }
+    
+//     if (accountNumber.length > 10) {
+//       toast.error("Account number must be 10 digits");
+//       return;
+//     }
+
+//     if (!accountNumber || !selectedBank) {
+//       toast.error("Please enter your account number and select a bank");
+//       return;
+//     }
+    
+//     try {
+//       setIsLoading(true);
+//       const payload = {
+//         account_bank: selectedBank.code,
+//         account_number: accountNumber,
+//         currency: "NGN"
+//       };
+
+//       const response = await fetch(
+//         `https://api.a1schools.org/instructors/${instructor.id}/bank-account`,
+//         {
+//           method: "POST",
+//           headers: {
+//             "Content-Type": "application/json",
+//             "Authorization": `Bearer ${instructor.token}`
+//           },
+//           body: JSON.stringify(payload)
+//         }
+//       );
+
+//       if (!response.ok) {
+//         throw new Error("Failed to add bank account");
+//       }
+    
+//       toast.success("Bank account added successfully");
+//       setAccountNumber("");
+//       setBankSearchQuery("");
+//       setSelectedBank(null);
+//       setHasBankAccount(true); // Update bank account status
+//     } catch (error) {
+//       console.error("Error adding bank account:", error);
+//       toast.error("Failed to add bank account. Please try again.");
+//     } finally {
+//       setIsLoading(false);
+//     }
+//   };
+
+//   // const handleRequestPayout = async () => {
+//   //   // Check if amount is at least 100
+//   //   const amountValue = parseFloat(payoutAmount);
+//   //   if (isNaN(amountValue) || amountValue < 100) {
+//   //     toast.error("The minimum payout amount is 100 Naira");
+//   //     return;
+//   //   }
+
+//   //   try {
+//   //     setIsPayoutLoading(true);
+//   //     const payload = {
+//   //       amount: payoutAmount
+//   //     };
+
+//   //     const response = await fetch(
+//   //       `https://api.a1schools.org/instructors/${instructor.id}/request-payout`,
+//   //       {
+//   //         method: "POST",
+//   //         headers: {
+//   //           "Content-Type": "application/json",
+//   //           "Authorization": `Bearer ${instructor.token}`
+//   //         },
+//   //         body: JSON.stringify(payload)
+//   //       }
+//   //     );
+
+//   //     if (!response.ok) {
+//   //       throw new Error("Failed to request payout");
+//   //     }
+
+//   //     toast.success("Payout request submitted successfully");
+//   //     setPayoutAmount("");
+//   //   } catch (error) {
+//   //     console.error("Error requesting payout:", error);
+//   //     toast.error("Failed to request payout. Please try again.");
+//   //   } finally {
+//   //     setIsPayoutLoading(false);
+//   //   }
+//   // };
+
+
+//   const handleRequestPayout = async () => {
+//     // Check if amount is at least 100
+//     const amountValue = parseFloat(payoutAmount);
+//     if (isNaN(amountValue) || amountValue < 100) {
+//       toast.error("The minimum payout amount is 100 Naira");
+//       return;
+//     }
+  
+//     try {
+//       setIsPayoutLoading(true);
+      
+//       // Make sure we're sending the actual number value, not a string
+//       const payload = {
+//         amount: amountValue
+//       };
+  
+//       console.log("Sending payout request with payload:", payload);
+  
+//       const response = await fetch(
+//         `https://api.a1schools.org/instructors/${instructor.id}/request-payout`,
+//         {
+//           method: "POST",
+//           headers: {
+//             "Content-Type": "application/json",
+//             "Authorization": `Bearer ${instructor.token}`
+//           },
+//           body: JSON.stringify(payload)
+//         }
+//       );
+  
+//       // Log complete response for debugging
+//       const responseData = await response.json();
+//       console.log("Payout response:", responseData);
+  
+//       if (!response.ok) {
+//         // Get more detailed error information
+//         throw new Error(responseData.message || "Failed to request payout");
+//       }
+  
+//       toast.success("Payout request submitted successfully");
+//       setPayoutAmount("");
+//     } catch (error) {
+//       console.error("Error requesting payout:", error);
+//       toast.error(error.message || "Failed to request payout. Please try again.");
+//     } finally {
+//       setIsPayoutLoading(false);
+//     }
+//   };
+//   const isFormValid = accountNumber.trim().length > 0 && selectedBank !== null;
+//   const isPayoutValid = payoutAmount.trim().length > 0 && parseFloat(payoutAmount) >= 100 && hasBankAccount;
+
+//   return (
+//     <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
+//       <ToastContainer />
+//       <h2 className="text-xl font-semibold mb-6">Add Bank Account</h2>
+      
+//       <div className="mb-4">
+//         <label htmlFor="accountNumber" className="block text-sm font-medium text-gray-700 mb-1">
+//           Account Number
+//         </label>
+//         <input
+//           type="text"
+//           id="accountNumber"
+//           value={accountNumber}
+//           onChange={handleAccountNumberChange}
+//           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+//           placeholder="Enter your account number"
+//           maxLength={10}
+//         />
+//       </div>
+
+//       <div className="mb-6 relative">
+//         <label htmlFor="bankSearch" className="block text-sm font-medium text-gray-700 mb-1">
+//           Search Bank
+//         </label>
+//         <input
+//           type="text"
+//           id="bankSearch"
+//           value={bankSearchQuery}
+//           onChange={handleBankSearch}
+//           onFocus={() => setShowDropdown(true)}
+//           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+//           placeholder="Search for your bank..."
+//           disabled={isLoading || banks.length === 0}
+//         />
+        
+//         {showDropdown && (
+//           <div className="absolute z-10 w-full mt-1 max-h-60 overflow-auto bg-white border border-gray-300 rounded-md shadow-lg">
+//             {filteredBanks.length > 0 ? (
+//               filteredBanks.map((bank) => (
+//                 <div
+//                   key={bank.id}
+//                   className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+//                   onClick={() => selectBank(bank)}
+//                 >
+//                   {bank.name}
+//                 </div>
+//               ))
+//             ) : (
+//               <div className="px-4 py-2 text-gray-500">No banks found</div>
+//             )}
+//           </div>
+//         )}
+//       </div>
+
+//       <button
+//         onClick={handleAddBank}
+//         disabled={!isFormValid || isLoading}
+//         className={`w-full py-2 px-4 rounded-md font-medium text-white ${
+//           isFormValid && !isLoading
+//             ? "bg-[blue] hover:bg-blue-700"
+//             : "bg-[gray] cursor-not-allowed"
+//         }`}
+//       >
+//         {isLoading ? "Adding..." : "Add Bank"}
+//       </button>
+
+//       {/* Payout Request Section */}
+//       <div className="mt-10 pt-6 border-t border-gray-200">
+//         <h2 className="text-xl font-semibold mb-6">Request Payout</h2>
+        
+//         {!hasBankAccount && !isCheckingBank && (
+//           <div className="mb-4 p-3 bg-yellow-50 text-yellow-700 rounded-md">
+//             Please add a bank account before requesting a payout.
+//           </div>
+//         )}
+        
+//         <div className="mb-6">
+//           <label htmlFor="payoutAmount" className="block text-sm font-medium text-gray-700 mb-1">
+//             Amount (NGN)
+//           </label>
+//           <input
+//             type="text"
+//             id="payoutAmount"
+//             value={payoutAmount}
+//             onChange={handlePayoutAmountChange}
+//             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+//             placeholder="Enter amount (minimum 100 Naira)"
+//             disabled={!hasBankAccount || isCheckingBank}
+//           />
+//           <p className="mt-1 text-sm text-gray-500">Minimum withdrawal: 100 Naira</p>
+//         </div>
+
+//         <button
+//           onClick={handleRequestPayout}
+//           disabled={!isPayoutValid || isPayoutLoading || isCheckingBank}
+//           className={`w-full py-2 px-4 rounded-md font-medium text-white ${
+//             isPayoutValid && !isPayoutLoading && !isCheckingBank
+//               ? "bg-[green] hover:bg-green-700"
+//               : "bg-[gray] cursor-not-allowed"
+//           }`}
+//         >
+//           {isPayoutLoading ? "Processing..." : "Request Payout"}
+//         </button>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default RequestPayOut;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 'use client'
 
 import { useEffect, useState } from "react";
@@ -67,7 +795,14 @@ const RequestPayOut = () => {
   const [step, setStep] = useState(1); // 1: Enter details, 2: Confirm withdrawal
   const [accountDetails, setAccountDetails] = useState<AccountDetails | null>(null);
   const [verifyingAccount, setVerifyingAccount] = useState(false);
+  const [hasBankAccount, setHasBankAccount] = useState(false);
+  const [isCheckingBank, setIsCheckingBank] = useState(true);
+  // const [payoutAmount, setPayoutAmount] = useState("");
+  // const [hasBankAccount, setHasBankAccount] = useState(false);
+  // const [isCheckingBank, setIsCheckingBank] = useState(true);
+  const [isPayoutLoading, setIsPayoutLoading] = useState(false);
   
+
   const [instructor, setInstructor] = useState<Instructor>({
     fullname: "Loading...",
     email: "",
@@ -212,27 +947,84 @@ const RequestPayOut = () => {
     }
   };
 
-  const handleContinue = () => {
-    // Validate inputs
-    if (!selectedBank) {
-      toast.error("Please select a bank");
-      return;
-    }
+  // const handleContinue = () => {
+  //   // Validate inputs
+  //   if (!selectedBank) {
+  //     toast.error("Please select a bank");
+  //     return;
+  //   }
     
-    if (accountNumber.length !== 10) {
+  //   if (accountNumber.length !== 10) {
+  //     toast.error("Account number must be 10 digits");
+  //     return;
+  //   }
+    
+  //   const amountValue = parseFloat(payoutAmount);
+  //   if (isNaN(amountValue) || amountValue < 100) {
+  //     toast.error("The minimum withdrawal amount is ₦100");
+  //     return;
+  //   }
+    
+  //   // Verify account details and proceed to confirmation
+  //   verifyAccountDetails();
+  // };
+
+  const handleContinue = async () => {
+    // Check if account number is exactly 10 digits
+    if (accountNumber.length < 10) {
       toast.error("Account number must be 10 digits");
       return;
     }
     
-    const amountValue = parseFloat(payoutAmount);
-    if (isNaN(amountValue) || amountValue < 100) {
-      toast.error("The minimum withdrawal amount is ₦100");
+    if (accountNumber.length > 10) {
+      toast.error("Account number must be 10 digits");
+      return;
+    }
+
+    if (!accountNumber || !selectedBank) {
+      toast.error("Please enter your account number and select a bank");
       return;
     }
     
-    // Verify account details and proceed to confirmation
+    try {
+      setIsLoading(true);
+      const payload = {
+        account_bank: selectedBank.code,
+        account_number: accountNumber,
+        currency: "NGN"
+      };
+
+      const response = await fetch(
+        `https://api.a1schools.org/instructors/${instructor.id}/bank-account`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${instructor.token}`
+          },
+          body: JSON.stringify(payload)
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to add bank account");
+      }
+    
+      toast.success("Bank account added successfully");
+      setAccountNumber("");
+      setBankSearchQuery("");
+      setSelectedBank(null);
+      setHasBankAccount(true); // Update bank account status
+    } catch (error) {
+      console.error("Error adding bank account:", error);
+      toast.error("Failed to add bank account. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
     verifyAccountDetails();
   };
+  // const isFormValid = accountNumber.trim().length > 0 && selectedBank !== null;
+  // const isPayoutValid = payoutAmount.trim().length > 0 && parseFloat(payoutAmount) >= 100 && hasBankAccount;
 
   const handleRequestPayout = async () => {
     try {
