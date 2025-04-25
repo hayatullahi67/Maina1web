@@ -662,8 +662,8 @@ export default function EditCourse() {
                       </Button>
                     </div>
 
-                    {course.modules?.map((module) => (
-                      <Card key={module.id} className="mb-4">
+                    {course.modules?.map((m) => (
+                      <Card key={m.id} className="mb-4">
                         <CardContent className="pt-6">
                           <div className="grid gap-4">
                             <div>
@@ -671,10 +671,10 @@ export default function EditCourse() {
                                 Module Title
                               </label>
                               <Input
-                                value={module.title}
+                                value={m.title}
                                 onChange={(e) =>
                                   handleModuleChange(
-                                    module.id,
+                                    m.id,
                                     "title",
                                     e.target.value
                                   )
@@ -688,10 +688,10 @@ export default function EditCourse() {
                                 Module Description
                               </label>
                               <Textarea
-                                value={module.description}
+                                value={m.description}
                                 onChange={(e) =>
                                   handleModuleChange(
-                                    module.id,
+                                    m.id,
                                     "description",
                                     e.target.value
                                   )
@@ -707,15 +707,15 @@ export default function EditCourse() {
                                   Lessons
                                 </h4>
                                 <Button
-                                  onClick={() => handleAddLesson(module.id)}
+                                  onClick={() => handleAddLesson(m.id)}
                                   className="rounded-xl"
                                 >
                                   Add Lesson
                                 </Button>
                               </div>
 
-                              {module.lessons.map((lesson) => (
-                                <Card key={lesson.id} className="mb-4">
+                              {m.lessons.map((l) => (
+                                <Card key={l.id} className="mb-4">
                                   <CardContent className="pt-6">
                                     <div className="grid gap-4">
                                       <div>
@@ -723,11 +723,11 @@ export default function EditCourse() {
                                           Lesson Title
                                         </label>
                                         <Input
-                                          value={lesson.title}
+                                          value={l.title}
                                           onChange={(e) =>
                                             handleLessonChange(
-                                              module.id,
-                                              lesson.id,
+                                              m.id,
+                                              l.id,
                                               "title",
                                               e.target.value
                                             )
@@ -741,11 +741,11 @@ export default function EditCourse() {
                                           Lesson Description
                                         </label>
                                         <Textarea
-                                          value={lesson.description}
+                                          value={l.description}
                                           onChange={(e) =>
                                             handleLessonChange(
-                                              module.id,
-                                              lesson.id,
+                                              m.id,
+                                              l.id,
                                               "description",
                                               e.target.value
                                             )
@@ -761,11 +761,11 @@ export default function EditCourse() {
                                         </label>
                                         <Input
                                           type="number"
-                                          value={lesson.duration}
+                                          value={l.duration}
                                           onChange={(e) =>
                                             handleLessonChange(
-                                              module.id,
-                                              lesson.id,
+                                              m.id,
+                                              l.id,
                                               "duration",
                                               e.target.value
                                             )
@@ -783,8 +783,8 @@ export default function EditCourse() {
                                           accept="video/*"
                                           onChange={(e) =>
                                             handleVideoChange(
-                                              module.id,
-                                              lesson.id,
+                                              m.id,
+                                              l.id,
                                               e
                                             )
                                           }
@@ -795,10 +795,10 @@ export default function EditCourse() {
                                         file:bg-blue-50 file:text-blue-700
                                         hover:file:bg-blue-100"
                                         />
-                                        {lesson.video_link && (
+                                        {l.video_link && (
                                           <div className="mt-2">
                                             <video
-                                              src={lesson.video_link}
+                                              src={l.video_link}
                                               controls
                                               className="w-full h-[200px] rounded-lg"
                                             />
