@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -31,14 +31,73 @@ interface CourseDetailProps {
 export function CourseDetail({ course, onClose }: CourseDetailProps) {
   const [expandedModule, setExpandedModule] = useState<string | null>(null);
   const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null);
+  const [modules, setModules] = useState<Module[]>([]);
+  const [quizzes, setQuizzes] = useState<{ [key: string]: Quiz }>({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchModulesAndQuizzes = async () => {
+      try {
+        const userData = localStorage.getItem("userData");
+        const parsedUserData = JSON.parse(userData || "{}");
+        const token = parsedUserData.token;
+
+        // Fetch modules
+        const modulesResponse = await fetch(
+          `https://api.a1schools.org/courses/${course.id}/modules`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (!modulesResponse.ok) {
+          throw new Error("Failed to fetch modules");
+        }
+
+        const modulesData = await modulesResponse.json();
+        setModules(modulesData.data || []);
+
+        // Fetch quizzes for each module
+        const quizzesData: { [key: string]: Quiz } = {};
+        for (const moduleItem of modulesData.data || []) {
+          const quizResponse = await fetch(
+            `https://api.a1schools.org/courses/${course.id}/modules/${moduleItem.id}/quiz`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (quizResponse.ok) {
+            const quizData = await quizResponse.json();
+            if (quizData.data && quizData.data.length > 0) {
+              quizzesData[moduleItem.id] = quizData.data[0];
+            }
+          }
+        }
+        setQuizzes(quizzesData);
+      } catch (error) {
+        console.error("Error fetching modules and quizzes:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchModulesAndQuizzes();
+  }, [course.id]);
 
   const toggleModule = (moduleId: string) => {
     setExpandedModule(expandedModule === moduleId ? null : moduleId);
   };
 
   const getModuleProgress = (module: Module) => {
-    const totalLessons = module.lessons.length;
-    const completedLessons = module.lessons.filter(
+    const totalLessons = module.lessons?.length || 0;
+    const completedLessons = (module.lessons || [])?.filter(
       (lesson) => !!(lesson as any).completed
     ).length;
     return (completedLessons / totalLessons) * 100;
@@ -47,6 +106,20 @@ export function CourseDetail({ course, onClose }: CourseDetailProps) {
   const handleLessonClick = (lesson: Lesson) => {
     setSelectedLesson(lesson);
   };
+
+  if (loading) {
+    return (
+      <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50">
+        <div className="container max-w-6xl mx-auto p-4 h-screen overflow-y-auto">
+          <Card className="relative">
+            <div className="flex items-center justify-center h-64">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+            </div>
+          </Card>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50">
@@ -119,14 +192,14 @@ export function CourseDetail({ course, onClose }: CourseDetailProps) {
                   </div>
                   <div className="flex items-center">
                     <BookOpen className="h-4 w-4 mr-2" />
-                    <span>{course?.modules?.length || 0} Modules</span>
+                    <span>{modules.length} Modules</span>
                   </div>
                 </div>
               </CardHeader>
 
               <CardContent>
                 <div className="space-y-4">
-                  {(course?.modules || [])?.map((module) => (
+                  {modules.map((module) => (
                     <Card key={module.id}>
                       <CardHeader
                         className="cursor-pointer"
@@ -158,7 +231,7 @@ export function CourseDetail({ course, onClose }: CourseDetailProps) {
 
                       {expandedModule === module.id && (
                         <CardContent className="space-y-2">
-                          {module.lessons.map((lesson) => (
+                          {(module.lessons || [])?.map((lesson) => (
                             <div
                               key={lesson.id}
                               className="flex items-center justify-between p-2 hover:bg-muted rounded-lg cursor-pointer"
@@ -177,14 +250,14 @@ export function CourseDetail({ course, onClose }: CourseDetailProps) {
                               </span>
                             </div>
                           ))}
-                          {module.quiz && (
+                          {quizzes[module.id] && (
                             <div className="flex items-center justify-between p-2 hover:bg-muted rounded-lg">
                               <div className="flex items-center gap-2">
                                 <CheckCircle2 className="h-4 w-4 text-muted-foreground" />
                                 <span>Quiz: {module.title}</span>
                               </div>
                               <span className="text-sm text-muted-foreground">
-                                {module.quiz.length} questions
+                                {quizzes[module.id].questions.length} questions
                               </span>
                             </div>
                           )}
