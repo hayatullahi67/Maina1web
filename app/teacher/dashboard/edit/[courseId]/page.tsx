@@ -40,7 +40,6 @@ import {
 } from "lucide-react";
 // import Image from "next/image";
 
-
 type Instructor = {
   fullname: string;
   email: string;
@@ -98,7 +97,7 @@ export default function EditCourse() {
   const [instructor, setInstructor] = useState<Instructor>({
     fullname: "Loading...",
     email: "",
-    id:"",
+    id: "",
     token: "",
   });
   const [course, setCourse] = useState<Course>({
@@ -420,50 +419,46 @@ export default function EditCourse() {
       const response = await fetch(
         `https://api.a1schools.org/auth/logout/${instructor.id}`,
         {
-          method: 'GET', 
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
-            
+            "Content-Type": "application/json",
           },
         }
       );
-  
+
       if (response.ok) {
-        console.log('Logout successful');
+        console.log("Logout successful");
         // Optional: Clear any user data from localStorage/sessionStorage
         // Redirect to login/home page
-        window.location.href = '/login';
+        window.location.href = "/login";
       } else {
         const errorData = await response.json();
-        console.error('Logout failed:', errorData.message);
+        console.error("Logout failed:", errorData.message);
       }
     } catch (error) {
-      console.error('Network error during logout:', error);
+      console.error("Network error during logout:", error);
     }
   };
 
   return (
     <>
-   
-
-    <SidebarProvider>
-
-    <Sidebar>
-              <SidebarHeader className="flex items-center gap-2 px-4">
-                <BookOpen className="h-6 w-6 text-primary" />
-                <span className="font-bold">A1 School</span>
-              </SidebarHeader>
-              <SidebarContent>
-                <SidebarMenu>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton asChild isActive>
-                      <Link href="/teacher/dashboard">
-                        <LayoutDashboard className="h-4 w-4" />
-                        <span>Dashboard</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  {/* <SidebarMenuItem>
+      <SidebarProvider>
+        <Sidebar>
+          <SidebarHeader className="flex items-center gap-2 px-4">
+            <BookOpen className="h-6 w-6 text-primary" />
+            <span className="font-bold">A1 School</span>
+          </SidebarHeader>
+          <SidebarContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild isActive>
+                  <Link href="/teacher/dashboard">
+                    <LayoutDashboard className="h-4 w-4" />
+                    <span>Dashboard</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              {/* <SidebarMenuItem>
                     <SidebarMenuButton asChild>
                       <Link href="/teacher/courses">
                         <BookOpen className="h-4 w-4" />
@@ -471,7 +466,7 @@ export default function EditCourse() {
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem> */}
-                  {/* <SidebarMenuItem>
+              {/* <SidebarMenuItem>
                     <SidebarMenuButton asChild>
                       <Link href="/teacher/students">
                         <Users className="h-4 w-4" />
@@ -479,7 +474,7 @@ export default function EditCourse() {
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem> */}
-                  {/* <SidebarMenuItem>
+              {/* <SidebarMenuItem>
                     <SidebarMenuButton asChild>
                       <Link href="/teacher/analytics">
                         <BarChart3 className="h-4 w-4" />
@@ -487,15 +482,15 @@ export default function EditCourse() {
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem> */}
-                  <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
-                      <Link href="/teacher/dashboard/transaction">
-                        <DollarSign className="h-4 w-4" />
-                        <span>Wallet</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  {/* <SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link href="/teacher/dashboard/transaction">
+                    <DollarSign className="h-4 w-4" />
+                    <span>Wallet</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              {/* <SidebarMenuItem>
                     <SidebarMenuButton asChild>
                       <Link href="/teacher/messages">
                         <MessageSquare className="h-4 w-4" />
@@ -503,15 +498,15 @@ export default function EditCourse() {
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem> */}
-                  <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
-                      <Link href="/teacher/dashboard/profile">
-                        <User className="h-4 w-4" />
-                        <span>Profile</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  {/* <SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link href="/teacher/dashboard/profile">
+                    <User className="h-4 w-4" />
+                    <span>Profile</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              {/* <SidebarMenuItem>
                     <SidebarMenuButton asChild>
                       <Link href="/teacher/settings">
                         <Settings className="h-4 w-4" />
@@ -519,326 +514,331 @@ export default function EditCourse() {
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem> */}
-    
-                  <SidebarMenuItem>
-                        <SidebarMenuButton asChild>
-                         <button  onClick={handleLogout}>
-    
-                         <span  className="text-[red]">Log Out</span>
-    
-                         </button>
-                          
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                </SidebarMenu>
-              </SidebarContent>
-              <SidebarFooter className="p-4">
-                <div className="flex items-center gap-3">
-                  <Image
-                    src="/placeholder.svg?height=40&width=40"
-                    width={40}
-                    height={40}
-                    alt="User avatar"
-                    className="rounded-full"
-                  />
-                  <div className="flex flex-col">
-                    <span className="text-sm font-medium">{instructor.fullname}</span>
-                    <span className="text-xs text-muted-foreground">
-                      {instructor.email}
-                    </span>
-                  </div>
-                </div>
-              </SidebarFooter>
-            </Sidebar>
-            <SidebarTrigger className="h-10 w-10 mt-[30px] ml-[30px] lg:hidden border border-gray-300 rounded-md flex items-center justify-center">
-            <PanelLeft className="h-4 w-4" />
-          </SidebarTrigger>
 
-    <div className="max-w-4xl mx-auto mt-10">
-      <Card className="shadow-2xl rounded-2xl mb-6">
-        <CardHeader>
-          <CardTitle>Edit Course</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {loading ? (
-            <p className="text-center py-10">Loading...</p>
-          ) : (
-            <div className="grid gap-6">
-              <div>
-                <label className="block text-sm font-medium mb-1">
-                  Course Image
-                </label>
-                <div className="flex items-center gap-4">
-                  {previewUrl && (
-                    <div className="relative w-32 h-32">
-                      <Image
-                        src={previewUrl}
-                        alt="Course preview"
-                        fill
-                        className="object-cover rounded-lg"
-                      />
-                    </div>
-                  )}
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    className="block w-full text-sm text-gray-500
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <button onClick={handleLogout}>
+                    <span className="text-[red]">Log Out</span>
+                  </button>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarContent>
+          <SidebarFooter className="p-4">
+            <div className="flex items-center gap-3">
+              <Image
+                src="/placeholder.svg?height=40&width=40"
+                width={40}
+                height={40}
+                alt="User avatar"
+                className="rounded-full"
+              />
+              <div className="flex flex-col">
+                <span className="text-sm font-medium">
+                  {instructor.fullname}
+                </span>
+                <span className="text-xs text-muted-foreground">
+                  {instructor.email}
+                </span>
+              </div>
+            </div>
+          </SidebarFooter>
+        </Sidebar>
+        <SidebarTrigger className="h-10 w-10 mt-[30px] ml-[30px] lg:hidden border border-gray-300 rounded-md flex items-center justify-center absolute right-4 bg-white">
+          <PanelLeft className="h-4 w-4" />
+        </SidebarTrigger>
+
+        <div className="max-w-4xl mx-auto mt-10">
+          <Card className="shadow-2xl rounded-2xl mb-6">
+            <CardHeader>
+              <CardTitle>Edit Course</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {loading ? (
+                <p className="text-center py-10">Loading...</p>
+              ) : (
+                <div className="grid gap-6">
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      Course Image
+                    </label>
+                    <div className="flex items-center gap-4">
+                      {previewUrl && (
+                        <div className="relative w-32 h-32">
+                          <Image
+                            src={previewUrl}
+                            alt="Course preview"
+                            fill
+                            className="object-cover rounded-lg"
+                          />
+                        </div>
+                      )}
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        className="block w-full text-sm text-gray-500
                       file:mr-4 file:py-2 file:px-4
                       file:rounded-full file:border-0
                       file:text-sm file:font-semibold
                       file:bg-blue-50 file:text-blue-700
                       hover:file:bg-blue-100"
-                  />
-                </div>
-              </div>
+                      />
+                    </div>
+                  </div>
 
-              <div>
-                <label className="block text-sm font-medium mb-1">Name</label>
-                <Input
-                  name="name"
-                  placeholder="Course Name"
-                  value={course.name}
-                  onChange={handleChange}
-                  className="rounded-xl"
-                />
-              </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      Name
+                    </label>
+                    <Input
+                      name="name"
+                      placeholder="Course Name"
+                      value={course.name}
+                      onChange={handleChange}
+                      className="rounded-xl"
+                    />
+                  </div>
 
-              <div>
-                <label className="block text-sm font-medium mb-1">
-                  Description
-                </label>
-                <Textarea
-                  name="description"
-                  placeholder="Course Description"
-                  value={course.description}
-                  onChange={handleChange}
-                  className="rounded-xl"
-                  rows={4}
-                />
-              </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      Description
+                    </label>
+                    <Textarea
+                      name="description"
+                      placeholder="Course Description"
+                      value={course.description}
+                      onChange={handleChange}
+                      className="rounded-xl"
+                      rows={4}
+                    />
+                  </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium mb-1">
-                    Price ($)
-                  </label>
-                  <Input
-                    name="price"
-                    type="number"
-                    placeholder="0.00"
-                    value={course.price}
-                    onChange={handleChange}
-                    className="rounded-xl"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1">
-                    Category
-                  </label>
-                  <Select
-                    name="category"
-                    value={course.category[0]}
-                    onValueChange={(value) =>
-                      setCourse((prev) => ({ ...prev, category: [value] }))
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="development">Development</SelectItem>
-                      <SelectItem value="design">Design</SelectItem>
-                      <SelectItem value="marketing">Marketing</SelectItem>
-                      <SelectItem value="business">Business</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-1">
+                        Price ($)
+                      </label>
+                      <Input
+                        name="price"
+                        type="number"
+                        placeholder="0.00"
+                        value={course.price}
+                        onChange={handleChange}
+                        className="rounded-xl"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-1">
+                        Category
+                      </label>
+                      <Select
+                        name="category"
+                        value={course.category[0]}
+                        onValueChange={(value) =>
+                          setCourse((prev) => ({ ...prev, category: [value] }))
+                        }
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a category" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="development">
+                            Development
+                          </SelectItem>
+                          <SelectItem value="design">Design</SelectItem>
+                          <SelectItem value="marketing">Marketing</SelectItem>
+                          <SelectItem value="business">Business</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
 
-              <div>
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg font-semibold">Modules</h3>
-                  <Button onClick={handleAddModule} className="rounded-xl">
-                    Add Module
-                  </Button>
-                </div>
+                  <div>
+                    <div className="flex justify-between items-center mb-4">
+                      <h3 className="text-lg font-semibold">Modules</h3>
+                      <Button onClick={handleAddModule} className="rounded-xl">
+                        Add Module
+                      </Button>
+                    </div>
 
-                {course.modules?.map((module) => (
-                  <Card key={module.id} className="mb-4">
-                    <CardContent className="pt-6">
-                      <div className="grid gap-4">
-                        <div>
-                          <label className="block text-sm font-medium mb-1">
-                            Module Title
-                          </label>
-                          <Input
-                            value={module.title}
-                            onChange={(e) =>
-                              handleModuleChange(
-                                module.id,
-                                "title",
-                                e.target.value
-                              )
-                            }
-                            className="rounded-xl"
-                          />
-                        </div>
+                    {course.modules?.map((module) => (
+                      <Card key={module.id} className="mb-4">
+                        <CardContent className="pt-6">
+                          <div className="grid gap-4">
+                            <div>
+                              <label className="block text-sm font-medium mb-1">
+                                Module Title
+                              </label>
+                              <Input
+                                value={module.title}
+                                onChange={(e) =>
+                                  handleModuleChange(
+                                    module.id,
+                                    "title",
+                                    e.target.value
+                                  )
+                                }
+                                className="rounded-xl"
+                              />
+                            </div>
 
-                        <div>
-                          <label className="block text-sm font-medium mb-1">
-                            Module Description
-                          </label>
-                          <Textarea
-                            value={module.description}
-                            onChange={(e) =>
-                              handleModuleChange(
-                                module.id,
-                                "description",
-                                e.target.value
-                              )
-                            }
-                            className="rounded-xl"
-                            rows={3}
-                          />
-                        </div>
+                            <div>
+                              <label className="block text-sm font-medium mb-1">
+                                Module Description
+                              </label>
+                              <Textarea
+                                value={module.description}
+                                onChange={(e) =>
+                                  handleModuleChange(
+                                    module.id,
+                                    "description",
+                                    e.target.value
+                                  )
+                                }
+                                className="rounded-xl"
+                                rows={3}
+                              />
+                            </div>
 
-                        <div>
-                          <div className="flex justify-between items-center mb-4">
-                            <h4 className="text-md font-semibold">Lessons</h4>
-                            <Button
-                              onClick={() => handleAddLesson(module.id)}
-                              className="rounded-xl"
-                            >
-                              Add Lesson
-                            </Button>
-                          </div>
+                            <div>
+                              <div className="flex justify-between items-center mb-4">
+                                <h4 className="text-md font-semibold">
+                                  Lessons
+                                </h4>
+                                <Button
+                                  onClick={() => handleAddLesson(module.id)}
+                                  className="rounded-xl"
+                                >
+                                  Add Lesson
+                                </Button>
+                              </div>
 
-                          {module.lessons.map((lesson) => (
-                            <Card key={lesson.id} className="mb-4">
-                              <CardContent className="pt-6">
-                                <div className="grid gap-4">
-                                  <div>
-                                    <label className="block text-sm font-medium mb-1">
-                                      Lesson Title
-                                    </label>
-                                    <Input
-                                      value={lesson.title}
-                                      onChange={(e) =>
-                                        handleLessonChange(
-                                          module.id,
-                                          lesson.id,
-                                          "title",
-                                          e.target.value
-                                        )
-                                      }
-                                      className="rounded-xl"
-                                    />
-                                  </div>
+                              {module.lessons.map((lesson) => (
+                                <Card key={lesson.id} className="mb-4">
+                                  <CardContent className="pt-6">
+                                    <div className="grid gap-4">
+                                      <div>
+                                        <label className="block text-sm font-medium mb-1">
+                                          Lesson Title
+                                        </label>
+                                        <Input
+                                          value={lesson.title}
+                                          onChange={(e) =>
+                                            handleLessonChange(
+                                              module.id,
+                                              lesson.id,
+                                              "title",
+                                              e.target.value
+                                            )
+                                          }
+                                          className="rounded-xl"
+                                        />
+                                      </div>
 
-                                  <div>
-                                    <label className="block text-sm font-medium mb-1">
-                                      Lesson Description
-                                    </label>
-                                    <Textarea
-                                      value={lesson.description}
-                                      onChange={(e) =>
-                                        handleLessonChange(
-                                          module.id,
-                                          lesson.id,
-                                          "description",
-                                          e.target.value
-                                        )
-                                      }
-                                      className="rounded-xl"
-                                      rows={2}
-                                    />
-                                  </div>
+                                      <div>
+                                        <label className="block text-sm font-medium mb-1">
+                                          Lesson Description
+                                        </label>
+                                        <Textarea
+                                          value={lesson.description}
+                                          onChange={(e) =>
+                                            handleLessonChange(
+                                              module.id,
+                                              lesson.id,
+                                              "description",
+                                              e.target.value
+                                            )
+                                          }
+                                          className="rounded-xl"
+                                          rows={2}
+                                        />
+                                      </div>
 
-                                  <div>
-                                    <label className="block text-sm font-medium mb-1">
-                                      Duration (minutes)
-                                    </label>
-                                    <Input
-                                      type="number"
-                                      value={lesson.duration}
-                                      onChange={(e) =>
-                                        handleLessonChange(
-                                          module.id,
-                                          lesson.id,
-                                          "duration",
-                                          e.target.value
-                                        )
-                                      }
-                                      className="rounded-xl"
-                                    />
-                                  </div>
+                                      <div>
+                                        <label className="block text-sm font-medium mb-1">
+                                          Duration (minutes)
+                                        </label>
+                                        <Input
+                                          type="number"
+                                          value={lesson.duration}
+                                          onChange={(e) =>
+                                            handleLessonChange(
+                                              module.id,
+                                              lesson.id,
+                                              "duration",
+                                              e.target.value
+                                            )
+                                          }
+                                          className="rounded-xl"
+                                        />
+                                      </div>
 
-                                  <div>
-                                    <label className="block text-sm font-medium mb-1">
-                                      Video
-                                    </label>
-                                    <input
-                                      type="file"
-                                      accept="video/*"
-                                      onChange={(e) =>
-                                        handleVideoChange(
-                                          module.id,
-                                          lesson.id,
-                                          e
-                                        )
-                                      }
-                                      className="block w-full text-sm text-gray-500
+                                      <div>
+                                        <label className="block text-sm font-medium mb-1">
+                                          Video
+                                        </label>
+                                        <input
+                                          type="file"
+                                          accept="video/*"
+                                          onChange={(e) =>
+                                            handleVideoChange(
+                                              module.id,
+                                              lesson.id,
+                                              e
+                                            )
+                                          }
+                                          className="block w-full text-sm text-gray-500
                                         file:mr-4 file:py-2 file:px-4
                                         file:rounded-full file:border-0
                                         file:text-sm file:font-semibold
                                         file:bg-blue-50 file:text-blue-700
                                         hover:file:bg-blue-100"
-                                    />
-                                    {lesson.video_link && (
-                                      <div className="mt-2">
-                                        <video
-                                          src={lesson.video_link}
-                                          controls
-                                          className="w-full h-[200px] rounded-lg"
                                         />
+                                        {lesson.video_link && (
+                                          <div className="mt-2">
+                                            <video
+                                              src={lesson.video_link}
+                                              controls
+                                              className="w-full h-[200px] rounded-lg"
+                                            />
+                                          </div>
+                                        )}
                                       </div>
-                                    )}
-                                  </div>
-                                </div>
-                              </CardContent>
-                            </Card>
-                          ))}
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+                                    </div>
+                                  </CardContent>
+                                </Card>
+                              ))}
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
 
-              <div className="flex justify-end space-x-4 pt-6">
-                <Button
-                  variant="outline"
-                  onClick={handleCancel}
-                  className="rounded-xl"
-                  disabled={saving}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  onClick={handleEdit}
-                  className="rounded-xl"
-                  disabled={saving}
-                >
-                  {saving ? "Updating..." : "Update"}
-                </Button>
-              </div>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-    </div>
-    </SidebarProvider>
+                  <div className="flex justify-end space-x-4 pt-6">
+                    <Button
+                      variant="outline"
+                      onClick={handleCancel}
+                      className="rounded-xl"
+                      disabled={saving}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={handleEdit}
+                      className="rounded-xl"
+                      disabled={saving}
+                    >
+                      {saving ? "Updating..." : "Update"}
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      </SidebarProvider>
     </>
   );
 }
