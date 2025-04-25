@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
 import { TransactionItem } from "@/components/TransactionItem";
-import { useEffect, useState } from "react";
+ import { useEffect , useState } from "react";
 import {
   SidebarProvider,
   Sidebar,
@@ -11,6 +11,7 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
+  SidebarTrigger,
 } from "@/components/ui/sider";
 import Link from "next/link";
 import {
@@ -19,6 +20,7 @@ import {
   DollarSign,
   LayoutDashboard,
   MessageSquare,
+  PanelLeft,
   PlusCircle,
   Settings,
   User,
@@ -26,7 +28,9 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 
-// const transactions = [
+
+
+ // const transactions = [
 //   { title: "Payment for Vue js", amount: 100, date: "4/18/2025" },
 //   { title: "Payment for Node js", amount: 100, date: "4/18/2025" },
 //   { title: "Payment Failed", amount: -190, date: "4/16/2025" },
@@ -46,10 +50,10 @@ import Image from "next/image";
 interface Transaction {
   amount: string;
   status: string;
-  created_at: string;
-  description: string;
-  id: string;
-  transaction_type: string;
+  created_at: string
+  description: string
+  id:string
+  transaction_type: string
 
   // Add more fields if needed
 }
@@ -58,57 +62,73 @@ type Instructor = {
   email: string;
   token: string;
   id: string;
+  wallet: {
+    balance: string;
+  };
 };
 export default function Home() {
-  const [instructor, setInstructor] = useState<Instructor>({
-    fullname: "Loading...",
-    email: "",
-    id: "",
-    token: "",
-  });
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const instructorId = instructor.id;
-  const token = instructor.token;
-
+ 
+ const [instructor, setInstructor] = useState<Instructor>({
+     fullname: "Loading...",
+     email: "",
+     id:"",
+     token: "",
+     wallet:  {
+      balance: "0.00" // Default value
+    }
+   });
+  const [transactions , setTransactions ] = useState<Transaction[]>([])
+   const instructorId = instructor.id;
+   const  token = instructor.token;
+ 
+  //  const wallet = instructor.wallet.balance;
+   
+  //  console.log("wealle" , wallet)
+ 
+ 
   useEffect(() => {
+        
     const stored = localStorage.getItem("userData");
-    console.log("stored", stored);
+    console.log("stored",stored)
     if (stored) {
       const parsed = JSON.parse(stored);
-      console.log("parsed", parsed);
+      console.log("parsed",parsed)
       setInstructor({
         fullname: parsed.fullname || "Student",
         email: parsed.email || "",
         id: parsed.id,
         token: parsed.token,
+        wallet: parsed.wallet
       });
     }
   }, []);
 
+   console.log("instr",instructor)
   useEffect(() => {
     const fetchSuccessfulTransactions = async () => {
       if (!instructorId || !token) return;
-
+  
       try {
         const response = await fetch(
           `https://api.a1schools.org/instructors/${instructorId}/transactions`,
           {
-            method: "GET",
+            method: 'GET',
             headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
             },
           }
         );
-
+  
         const data = await response.json();
         console.log("💰 Transactions data:", data);
-        setTransactions(data.data);
+         setTransactions(data.data)
+      
       } catch (error) {
         console.error("❌ Failed to fetch transactions:", error);
       }
     };
-
+  
     fetchSuccessfulTransactions();
   }, [instructorId, token]);
   const handleLogout = async () => {
@@ -116,115 +136,178 @@ export default function Home() {
       const response = await fetch(
         `https://api.a1schools.org/auth/logout/${instructorId}`,
         {
-          method: "GET",
+          method: 'GET', 
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
+            
           },
         }
       );
-
+  
       if (response.ok) {
-        console.log("Logout successful");
+        console.log('Logout successful');
         // Optional: Clear any user data from localStorage/sessionStorage
         // Redirect to login/home page
-        window.location.href = "/login";
+        window.location.href = '/login';
       } else {
         const errorData = await response.json();
-        console.error("Logout failed:", errorData.message);
+        console.error('Logout failed:', errorData.message);
       }
     } catch (error) {
-      console.error("Network error during logout:", error);
+      console.error('Network error during logout:', error);
     }
   };
 
   return (
     <>
-      <SidebarProvider className="pt-[80px]">
-        <Sidebar>
-          <SidebarHeader className="flex items-center gap-2 px-4">
-            <BookOpen className="h-6 w-6 text-primary" />
-            <span className="font-bold">A1 School</span>
-          </SidebarHeader>
-          <SidebarContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive>
-                  <Link href="/teacher/dashboard">
-                    <LayoutDashboard className="h-4 w-4" />
-                    <span>Dashboard</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
+    <SidebarProvider className="pt-[80px]">
 
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <Link href="/teacher/dashboard/transaction">
-                    <DollarSign className="h-4 w-4" />
-                    <span>Wallet</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
 
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <Link href="/teacher/dashboard/profile">
-                    <User className="h-4 w-4" />
-                    <span>Profile</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
 
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <button onClick={handleLogout}>
-                    <span className="text-[red]">Log Out</span>
-                  </button>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarContent>
-          <SidebarFooter className="p-4">
-            <div className="flex items-center gap-3">
-              <Image
-                src="/placeholder.svg?height=40&width=40"
-                width={40}
-                height={40}
-                alt="User avatar"
-                className="rounded-full"
-              />
-              <div className="flex flex-col">
-                <span className="text-sm font-medium">
-                  {instructor.fullname}
-                </span>
-                <span className="text-xs text-muted-foreground">
-                  {instructor.email}
-                </span>
-              </div>
-            </div>
-          </SidebarFooter>
-        </Sidebar>
-        <div className="pb-20 max-w-md mx-auto">
-          {/* Summary Card */}
-          <div className="bg-white shadow-lg rounded-xl p-6 mb-6 flex justify-between items-center">
-            <div>
-              <p className="text-sm font-medium text-gray-500 uppercase">
-                Total Balance
-              </p>
-              <p className="mt-1 text-3xl font-bold text-gray-900">$500</p>
-            </div>
-            <button className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-lightblack hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-              Withdraw
-            </button>
+            <Sidebar>
+              <SidebarHeader className="flex items-center gap-2 px-4">
+                <BookOpen className="h-6 w-6 text-primary" />
+                <span className="font-bold">A1 School</span>
+              </SidebarHeader>
+              <SidebarContent>
+                <SidebarMenu>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild isActive>
+                      <Link href="/teacher/dashboard">
+                        <LayoutDashboard className="h-4 w-4" />
+                        <span>Dashboard</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  {/* <SidebarMenuItem>
+                    <SidebarMenuButton asChild>
+                      <Link href="/teacher/courses">
+                        <BookOpen className="h-4 w-4" />
+                        <span>My Courses</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem> */}
+                  {/* <SidebarMenuItem>
+                    <SidebarMenuButton asChild>
+                      <Link href="/teacher/students">
+                        <Users className="h-4 w-4" />
+                        <span>Students</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem> */}
+                  {/* <SidebarMenuItem>
+                    <SidebarMenuButton asChild>
+                      <Link href="/teacher/analytics">
+                        <BarChart3 className="h-4 w-4" />
+                        <span>Analytics</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem> */}
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild>
+                      <Link href="/teacher/dashboard/transaction">
+                        <DollarSign className="h-4 w-4" />
+                        <span>Wallet</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  {/* <SidebarMenuItem>
+                    <SidebarMenuButton asChild>
+                      <Link href="/teacher/messages">
+                        <MessageSquare className="h-4 w-4" />
+                        <span>Messages</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem> */}
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild>
+                      <Link href="/teacher/dashboard/profile">
+                        <User className="h-4 w-4" />
+                        <span>Profile</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  {/* <SidebarMenuItem>
+                    <SidebarMenuButton asChild>
+                      <Link href="/teacher/settings">
+                        <Settings className="h-4 w-4" />
+                        <span>Settings</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem> */}
+    
+                  <SidebarMenuItem>
+                        <SidebarMenuButton asChild>
+                         <button  onClick={handleLogout}>
+    
+                         <span  className="text-[red]">Log Out</span>
+    
+                         </button>
+                          
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                </SidebarMenu>
+              </SidebarContent>
+              <SidebarFooter className="p-4">
+                <div className="flex items-center gap-3">
+                  <Image
+                    src="/placeholder.svg?height=40&width=40"
+                    width={40}
+                    height={40}
+                    alt="User avatar"
+                    className="rounded-full"
+                  />
+                  <div className="flex flex-col">
+                    <span className="text-sm font-medium">{instructor.fullname}</span>
+                    <span className="text-xs text-muted-foreground">
+                      {instructor.email}
+                    </span>
+                  </div>
+                </div>
+              </SidebarFooter>
+            </Sidebar>
+            <SidebarTrigger className="h-10 w-10 mt-[30px] ml-[30px] lg:hidden border border-gray-300 rounded-md flex items-center justify-center">
+            <PanelLeft className="h-4 w-4" />
+          </SidebarTrigger>
+     <div className="pb-20 w-[65%] mx-auto">
+      {/* {transactions.map((tx, idx) => (
+        <TransactionItem key={idx} {...tx} />
+
+
+      ))} */}
+      <div className="bg-[lightblue] h-[100px] flex items-center pl-[50px]">
+       <div className="text-white">
+          
+          <div>
+        <p>Total Balance</p> 
+        <p>${parseFloat(instructor.wallet.balance).toFixed(2)}</p>  
           </div>
 
-          {/* Transactions List */}
-          {Array.isArray(transactions) && transactions.length > 0 ? (
-            transactions.map((tx, idx) => <TransactionItem key={idx} {...tx} />)
-          ) : (
-            <p className="text-center text-gray-500">No transactions found.</p>
-          )}
-        </div>
-      </SidebarProvider>
+          <div>
+            <Link href="/teacher/dashboard/request">
+              <div>
+                Withdraw
+              </div>
+            </Link>
+          </div>
+
+
+       </div>
+
+      </div>
+
+{Array.isArray(transactions) && transactions.length > 0 ? (
+    transactions.map((tx, idx) => (
+      <TransactionItem key={idx} {...tx} />
+    ))
+  ) : (
+    <p className="text-center text-gray-500">No transactions found.</p>
+  )}
+    </div>
+    </SidebarProvider>
+    
+    
     </>
+   
   );
 }

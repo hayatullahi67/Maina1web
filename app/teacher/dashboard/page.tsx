@@ -5,6 +5,7 @@ import {
   BookOpen,
   DollarSign,
   LayoutDashboard,
+  PanelLeft,
   PlusCircle,
   User,
   Users
@@ -30,6 +31,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
+  SidebarTrigger,
 } from "@/components/ui/sider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRouter } from "next/navigation";
@@ -765,6 +767,10 @@ export default function TeacherDashboard() {
             </div>
           </SidebarFooter>
         </Sidebar>
+        
+        <SidebarTrigger className="h-10 w-10 mt-[30px] ml-[30px] lg:hidden border border-gray-300 rounded-md flex items-center justify-center">
+            <PanelLeft className="h-4 w-4" />
+          </SidebarTrigger>
         <div className="flex-1 p-8">
           <div className="flex items-center justify-between mb-8">
             <div>
