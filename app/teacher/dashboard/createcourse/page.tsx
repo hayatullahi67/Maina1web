@@ -100,25 +100,24 @@ export default function CourseManagementPage() {
       const response = await fetch(
         `https://api.a1schools.org/auth/logout/${instructor.id}`,
         {
-          method: 'GET', 
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
-            
+            "Content-Type": "application/json",
           },
         }
       );
-  
+
       if (response.ok) {
-        console.log('Logout successful');
+        console.log("Logout successful");
         // Optional: Clear any user data from localStorage/sessionStorage
         // Redirect to login/home page
-        window.location.href = '/login';
+        window.location.href = "/login";
       } else {
         const errorData = await response.json();
-        console.error('Logout failed:', errorData.message);
+        console.error("Logout failed:", errorData.message);
       }
     } catch (error) {
-      console.error('Network error during logout:', error);
+      console.error("Network error during logout:", error);
     }
   };
 
@@ -647,23 +646,23 @@ export default function CourseManagementPage() {
 
   return (
     <>
-    <SidebarProvider>
-    <Sidebar>
-              <SidebarHeader className="flex items-center gap-2 px-4">
-                <BookOpen className="h-6 w-6 text-primary" />
-                <span className="font-bold">A1 School</span>
-              </SidebarHeader>
-              <SidebarContent>
-                <SidebarMenu>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton asChild isActive>
-                      <Link href="/teacher/dashboard">
-                        <LayoutDashboard className="h-4 w-4" />
-                        <span>Dashboard</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  {/* <SidebarMenuItem>
+      <SidebarProvider>
+        <Sidebar>
+          <SidebarHeader className="flex items-center gap-2 px-4">
+            <BookOpen className="h-6 w-6 text-primary" />
+            <span className="font-bold">A1 School</span>
+          </SidebarHeader>
+          <SidebarContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild isActive>
+                  <Link href="/teacher/dashboard">
+                    <LayoutDashboard className="h-4 w-4" />
+                    <span>Dashboard</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              {/* <SidebarMenuItem>
                     <SidebarMenuButton asChild>
                       <Link href="/teacher/courses">
                         <BookOpen className="h-4 w-4" />
@@ -671,7 +670,7 @@ export default function CourseManagementPage() {
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem> */}
-                  {/* <SidebarMenuItem>
+              {/* <SidebarMenuItem>
                     <SidebarMenuButton asChild>
                       <Link href="/teacher/students">
                         <Users className="h-4 w-4" />
@@ -679,7 +678,7 @@ export default function CourseManagementPage() {
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem> */}
-                  {/* <SidebarMenuItem>
+              {/* <SidebarMenuItem>
                     <SidebarMenuButton asChild>
                       <Link href="/teacher/analytics">
                         <BarChart3 className="h-4 w-4" />
@@ -687,15 +686,15 @@ export default function CourseManagementPage() {
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem> */}
-                  <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
-                      <Link href="/teacher/dashboard/transaction">
-                        <DollarSign className="h-4 w-4" />
-                        <span>Wallet</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  {/* <SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link href="/teacher/dashboard/transaction">
+                    <DollarSign className="h-4 w-4" />
+                    <span>Wallet</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              {/* <SidebarMenuItem>
                     <SidebarMenuButton asChild>
                       <Link href="/teacher/messages">
                         <MessageSquare className="h-4 w-4" />
@@ -703,15 +702,15 @@ export default function CourseManagementPage() {
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem> */}
-                  <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
-                      <Link href="/teacher/dashboard/profile">
-                        <User className="h-4 w-4" />
-                        <span>Profile</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  {/* <SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link href="/teacher/dashboard/profile">
+                    <User className="h-4 w-4" />
+                    <span>Profile</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              {/* <SidebarMenuItem>
                     <SidebarMenuButton asChild>
                       <Link href="/teacher/settings">
                         <Settings className="h-4 w-4" />
@@ -719,522 +718,542 @@ export default function CourseManagementPage() {
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem> */}
-    
-                  <SidebarMenuItem>
-                        <SidebarMenuButton asChild>
-                         <button  onClick={handleLogout}>
-    
-                         <span  className="text-[red]">Log Out</span>
-    
-                         </button>
-                          
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                </SidebarMenu>
-              </SidebarContent>
-              <SidebarFooter className="p-4">
-                <div className="flex items-center gap-3">
-                  <Image
-                    src="/placeholder.svg?height=40&width=40"
-                    width={40}
-                    height={40}
-                    alt="User avatar"
-                    className="rounded-full"
+
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <button onClick={handleLogout}>
+                    <span className="text-[red]">Log Out</span>
+                  </button>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarContent>
+          <SidebarFooter className="p-4">
+            <div className="flex items-center gap-3">
+              <Image
+                src="/placeholder.svg?height=40&width=40"
+                width={40}
+                height={40}
+                alt="User avatar"
+                className="rounded-full"
+              />
+              <div className="flex flex-col">
+                <span className="text-sm font-medium">
+                  {instructor.fullname}
+                </span>
+                <span className="text-xs text-muted-foreground">
+                  {instructor.email}
+                </span>
+              </div>
+            </div>
+          </SidebarFooter>
+        </Sidebar>
+        <SidebarTrigger className="h-10 w-10 mt-[30px] ml-[30px] lg:hidden border border-gray-300 rounded-md flex items-center justify-center absolute right-4 bg-white">
+          <PanelLeft className="h-4 w-4" />
+        </SidebarTrigger>
+
+        <div className="flex justify-center w-[100%]">
+          <div className="w-[90%] md:w-[80%] lg:w-[70%] my-[50px]">
+            <h1 className="text-2xl font-bold text-[black]">Course Details</h1>
+            <p className="mt-[5px] text-[gray]">
+              Enter information about your course
+            </p>
+
+            <div className="mt-[30px] space-y-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-[30px]">
+                <div className="space-y-2">
+                  <Label htmlFor="coursename">Course Name</Label>
+                  <Input
+                    id="coursename"
+                    type="text"
+                    value={courseName}
+                    onChange={(e) => setCourseName(e.target.value)}
+                    placeholder="Enter course name"
                   />
-                  <div className="flex flex-col">
-                    <span className="text-sm font-medium">{instructor.fullname}</span>
-                    <span className="text-xs text-muted-foreground">
-                      {instructor.email}
-                    </span>
-                  </div>
                 </div>
-              </SidebarFooter>
-            </Sidebar>
-            <SidebarTrigger className="h-10 w-10 mt-[30px] ml-[30px] lg:hidden border border-gray-300 rounded-md flex items-center justify-center">
-            <PanelLeft className="h-4 w-4" />
-          </SidebarTrigger>
+                <div className="space-y-2">
+                  <Label htmlFor="courseprice">Price</Label>
+                  <Input
+                    id="courseprice"
+                    type="text"
+                    value={coursePrice}
+                    onChange={(e) => {
+                      // Only allow numbers and decimal point
+                      const regex = /^\d*\.?\d*$/;
+                      if (regex.test(e.target.value) || e.target.value === "") {
+                        setCoursePrice(e.target.value);
+                      }
+                    }}
+                    placeholder="Enter course price"
+                  />
+                </div>
+              </div>
 
-    <div className="flex justify-center w-[100%]">
-      <div className="w-[90%] md:w-[80%] lg:w-[70%] my-[50px]">
-        <h1 className="text-2xl font-bold text-[black]">Course Details</h1>
-        <p className="mt-[5px] text-[gray]">
-          Enter information about your course
-        </p>
-
-        <div className="mt-[30px] space-y-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-[30px]">
-            <div className="space-y-2">
-              <Label htmlFor="coursename">Course Name</Label>
-              <Input
-                id="coursename"
-                type="text"
-                value={courseName}
-                onChange={(e) => setCourseName(e.target.value)}
-                placeholder="Enter course name"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="courseprice">Price</Label>
-              <Input
-                id="courseprice"
-                type="text"
-                value={coursePrice}
-                onChange={(e) => {
-                  // Only allow numbers and decimal point
-                  const regex = /^\d*\.?\d*$/;
-                  if (regex.test(e.target.value) || e.target.value === "") {
-                    setCoursePrice(e.target.value);
-                  }
-                }}
-                placeholder="Enter course price"
-              />
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="categories">Categories</Label>
-            <div className="flex gap-2">
-              <Input
-                id="categories"
-                type="text"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                placeholder="Add a category"
-                className="flex-1"
-              />
-              <Button
-                type="button"
-                onClick={handleAddCategory}
-                className="bg-white text-black"
-              >
-                <Plus className="w-4 h-4 mr-2" />
-                Add
-              </Button>
-            </div>
-            {categories.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-2">
-                {categories.map((cat, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center bg-gray-200 rounded-full px-3 py-1"
+              <div className="space-y-2">
+                <Label htmlFor="categories">Categories</Label>
+                <div className="flex gap-2">
+                  <Input
+                    id="categories"
+                    type="text"
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    placeholder="Add a category"
+                    className="flex-1"
+                  />
+                  <Button
+                    type="button"
+                    onClick={handleAddCategory}
+                    className="bg-white text-black"
                   >
-                    <span className="text-sm">{cat}</span>
-                    <button
-                      onClick={() => handleRemoveCategory(cat)}
-                      className="ml-2 text-gray-500 hover:text-gray-700"
-                    >
-                      <X className="w-3 h-3" />
-                    </button>
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add
+                  </Button>
+                </div>
+                {categories.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {categories.map((cat, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center bg-gray-200 rounded-full px-3 py-1"
+                      >
+                        <span className="text-sm">{cat}</span>
+                        <button
+                          onClick={() => handleRemoveCategory(cat)}
+                          className="ml-2 text-gray-500 hover:text-gray-700"
+                        >
+                          <X className="w-3 h-3" />
+                        </button>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                )}
               </div>
-            )}
-          </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
-            <Textarea
-              id="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="Enter course description"
-              rows={4}
-            />
-          </div>
+              <div className="space-y-2">
+                <Label htmlFor="description">Description</Label>
+                <Textarea
+                  id="description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="Enter course description"
+                  rows={4}
+                />
+              </div>
 
-          <div className="space-y-2">
-            <Label>Course Thumbnail</Label>
-            <div
-              className="border-2 border-dashed rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors"
-              onClick={() =>
-                document.getElementById("thumbnail-input")?.click()
-              }
-            >
-              {imagePreview ? (
-                <div className="relative w-full h-48">
-                  <Image
-                    src={imagePreview || "/placeholder.svg"}
-                    alt="Thumbnail Preview"
-                    fill
-                    className="object-cover rounded-lg"
+              <div className="space-y-2">
+                <Label>Course Thumbnail</Label>
+                <div
+                  className="border-2 border-dashed rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors"
+                  onClick={() =>
+                    document.getElementById("thumbnail-input")?.click()
+                  }
+                >
+                  {imagePreview ? (
+                    <div className="relative w-full h-48">
+                      <Image
+                        src={imagePreview || "/placeholder.svg"}
+                        alt="Thumbnail Preview"
+                        fill
+                        className="object-cover rounded-lg"
+                      />
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center h-48">
+                      <Upload className="w-12 h-12 text-gray-400 mb-2" />
+                      <p className="text-gray-500">Click to upload thumbnail</p>
+                    </div>
+                  )}
+                  <Input
+                    id="thumbnail-input"
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleImageChange}
                   />
                 </div>
-              ) : (
-                <div className="flex flex-col items-center justify-center h-48">
-                  <Upload className="w-12 h-12 text-gray-400 mb-2" />
-                  <p className="text-gray-500">Click to upload thumbnail</p>
-                </div>
-              )}
-              <Input
-                id="thumbnail-input"
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={handleImageChange}
-              />
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <div>
-                <h2 className="text-xl font-semibold">Learning Objectives</h2>
-                <p className="text-sm text-gray-500">
-                  What will students learn from this course?
-                </p>
               </div>
-            </div>
 
-            {objectives.map((obj, index) => (
-              <div
-                key={obj.id}
-                className="p-4 border rounded-md bg-white shadow-sm"
-              >
-                <div className="flex justify-between items-center mb-4">
-                  <span className="text-blue-600 font-semibold">
-                    Objective #{index + 1}
-                  </span>
-                  {objectives.length > 1 && (
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => handleRemoveObjective(obj.id)}
-                      className="text-red-500 hover:text-red-700"
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                  )}
-                </div>
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor={`objective-title-${obj.id}`}>Title</Label>
-                    <Input
-                      id={`objective-title-${obj.id}`}
-                      type="text"
-                      placeholder="Enter learning objective"
-                      value={obj.title}
-                      onChange={(e) =>
-                        handleChangeObjective(obj.id, "title", e.target.value)
-                      }
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor={`objective-desc-${obj.id}`}>
-                      Description
-                    </Label>
-                    <Textarea
-                      id={`objective-desc-${obj.id}`}
-                      placeholder="Enter detailed description"
-                      value={obj.description}
-                      onChange={(e) =>
-                        handleChangeObjective(
-                          obj.id,
-                          "description",
-                          e.target.value
-                        )
-                      }
-                      rows={3}
-                    />
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <h2 className="text-xl font-semibold">
+                      Learning Objectives
+                    </h2>
+                    <p className="text-sm text-gray-500">
+                      What will students learn from this course?
+                    </p>
                   </div>
                 </div>
-              </div>
-            ))}
 
-            <Button
-              variant="outline"
-              onClick={handleAddObjective}
-              className="w-full border-blue-600 text-blue-600 hover:bg-blue-50"
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Add Learning Objective
-            </Button>
-          </div>
-
-          <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <div>
-                <h2 className="text-xl font-semibold">Quiz Questions</h2>
-                <p className="text-sm text-gray-500">
-                  Add questions for the course quiz
-                </p>
-              </div>
-            </div>
-
-            {questions.map((question, index) => (
-              <div
-                key={question.id}
-                className="p-4 border rounded-md bg-white shadow-sm"
-              >
-                <div className="flex justify-between items-center mb-4">
-                  <span className="text-blue-600 font-semibold">
-                    Question #{index + 1}
-                  </span>
-                  {questions.length > 1 && (
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => handleRemoveQuestion(question.id)}
-                      className="text-red-500 hover:text-red-700"
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                  )}
-                </div>
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor={`question-text-${question.id}`}>
-                      Question Text
-                    </Label>
-                    <Input
-                      id={`question-text-${question.id}`}
-                      type="text"
-                      placeholder="Enter question"
-                      value={question.text}
-                      onChange={(e) =>
-                        handleQuestionTextChange(question.id, e.target.value)
-                      }
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label>Options</Label>
-                    {question.options.map((option, optIndex) => (
-                      <div
-                        key={option.id}
-                        className="flex items-center gap-2 mb-2"
-                      >
-                        <div
-                          className={`w-6 h-6 rounded-full border-2 flex items-center justify-center cursor-pointer ${
-                            option.answer
-                              ? "border-green-500 bg-green-50"
-                              : "border-gray-300"
-                          }`}
-                          onClick={() =>
-                            handleSetCorrectAnswer(question.id, option.id)
-                          }
+                {objectives.map((obj, index) => (
+                  <div
+                    key={obj.id}
+                    className="p-4 border rounded-md bg-white shadow-sm"
+                  >
+                    <div className="flex justify-between items-center mb-4">
+                      <span className="text-blue-600 font-semibold">
+                        Objective #{index + 1}
+                      </span>
+                      {objectives.length > 1 && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => handleRemoveObjective(obj.id)}
+                          className="text-red-500 hover:text-red-700"
                         >
-                          {option.answer && (
-                            <Check className="h-4 w-4 text-green-500" />
-                          )}
-                        </div>
+                          <X className="h-4 w-4" />
+                        </Button>
+                      )}
+                    </div>
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor={`objective-title-${obj.id}`}>
+                          Title
+                        </Label>
                         <Input
+                          id={`objective-title-${obj.id}`}
                           type="text"
-                          placeholder={`Option ${optIndex + 1}`}
-                          value={option.value}
+                          placeholder="Enter learning objective"
+                          value={obj.title}
                           onChange={(e) =>
-                            handleOptionChange(
-                              question.id,
-                              option.id,
+                            handleChangeObjective(
+                              obj.id,
+                              "title",
                               e.target.value
                             )
                           }
-                          className={`flex-1 ${
-                            option.answer ? "border-green-500 bg-green-50" : ""
-                          }`}
                         />
-                        {question.options.length > 2 && (
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() =>
-                              handleRemoveOption(question.id, option.id)
-                            }
-                            className="text-red-500 hover:text-red-700"
-                          >
-                            <X className="h-4 w-4" />
-                          </Button>
-                        )}
                       </div>
-                    ))}
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleAddOption(question.id)}
-                      className="text-blue-600 hover:text-blue-700"
-                    >
-                      <Plus className="w-4 h-4 mr-2" />
-                      Add Option
-                    </Button>
+                      <div className="space-y-2">
+                        <Label htmlFor={`objective-desc-${obj.id}`}>
+                          Description
+                        </Label>
+                        <Textarea
+                          id={`objective-desc-${obj.id}`}
+                          placeholder="Enter detailed description"
+                          value={obj.description}
+                          onChange={(e) =>
+                            handleChangeObjective(
+                              obj.id,
+                              "description",
+                              e.target.value
+                            )
+                          }
+                          rows={3}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+
+                <Button
+                  variant="outline"
+                  onClick={handleAddObjective}
+                  className="w-full border-blue-600 text-blue-600 hover:bg-blue-50"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Learning Objective
+                </Button>
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <h2 className="text-xl font-semibold">Quiz Questions</h2>
+                    <p className="text-sm text-gray-500">
+                      Add questions for the course quiz
+                    </p>
                   </div>
                 </div>
-              </div>
-            ))}
 
-            <Button
-              variant="outline"
-              onClick={handleAddQuestion}
-              className="w-full border-blue-600 text-blue-600 hover:bg-blue-50"
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Add Question
-            </Button>
-          </div>
-
-          <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <div>
-                <h2 className="text-xl font-semibold">Course Modules</h2>
-                <p className="text-sm text-gray-500">
-                  Organize your course content into modules
-                </p>
-              </div>
-            </div>
-
-            {modules.map((module, moduleIndex) => (
-              <div
-                key={module.id}
-                className="p-4 border rounded-md bg-white shadow-sm"
-              >
-                <div className="flex justify-between items-center mb-4">
-                  <span className="text-blue-600 font-semibold">
-                    Module #{moduleIndex + 1}
-                  </span>
-                  {modules.length > 1 && (
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => handleRemoveModule(module.id)}
-                      className="text-red-500 hover:text-red-700"
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                  )}
-                </div>
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor={`module-title-${module.id}`}>Title</Label>
-                    <Input
-                      id={`module-title-${module.id}`}
-                      type="text"
-                      placeholder="Enter module title"
-                      value={module.title}
-                      onChange={(e) =>
-                        handleModuleTitleChange(module.id, e.target.value)
-                      }
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor={`module-desc-${module.id}`}>
-                      Description
-                    </Label>
-                    <Textarea
-                      id={`module-desc-${module.id}`}
-                      placeholder="Enter module description"
-                      value={module.description}
-                      onChange={(e) =>
-                        handleModuleDescriptionChange(module.id, e.target.value)
-                      }
-                      rows={3}
-                    />
-                  </div>
-
-                  <div className="space-y-4">
-                    <h3 className="font-medium">Lessons</h3>
-                    {module.lessons.map((lesson, lessonIndex) => (
-                      <div
-                        key={lesson.id}
-                        className="border rounded-md p-4 space-y-4"
-                      >
-                        <div className="flex justify-between items-center">
-                          <div className="flex items-center gap-2 flex-1">
-                            <span className="text-gray-500 font-medium">
-                              #{lessonIndex + 1}
-                            </span>
+                {questions.map((question, index) => (
+                  <div
+                    key={question.id}
+                    className="p-4 border rounded-md bg-white shadow-sm"
+                  >
+                    <div className="flex justify-between items-center mb-4">
+                      <span className="text-blue-600 font-semibold">
+                        Question #{index + 1}
+                      </span>
+                      {questions.length > 1 && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => handleRemoveQuestion(question.id)}
+                          className="text-red-500 hover:text-red-700"
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
+                      )}
+                    </div>
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor={`question-text-${question.id}`}>
+                          Question Text
+                        </Label>
+                        <Input
+                          id={`question-text-${question.id}`}
+                          type="text"
+                          placeholder="Enter question"
+                          value={question.text}
+                          onChange={(e) =>
+                            handleQuestionTextChange(
+                              question.id,
+                              e.target.value
+                            )
+                          }
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Options</Label>
+                        {question.options.map((option, optIndex) => (
+                          <div
+                            key={option.id}
+                            className="flex items-center gap-2 mb-2"
+                          >
+                            <div
+                              className={`w-6 h-6 rounded-full border-2 flex items-center justify-center cursor-pointer ${
+                                option.answer
+                                  ? "border-green-500 bg-green-50"
+                                  : "border-gray-300"
+                              }`}
+                              onClick={() =>
+                                handleSetCorrectAnswer(question.id, option.id)
+                              }
+                            >
+                              {option.answer && (
+                                <Check className="h-4 w-4 text-green-500" />
+                              )}
+                            </div>
                             <Input
                               type="text"
-                              placeholder="Enter lesson title"
-                              value={lesson.title}
+                              placeholder={`Option ${optIndex + 1}`}
+                              value={option.value}
                               onChange={(e) =>
-                                handleLessonTitleChange(
-                                  module.id,
-                                  lesson.id,
+                                handleOptionChange(
+                                  question.id,
+                                  option.id,
                                   e.target.value
                                 )
                               }
-                              className="flex-1"
+                              className={`flex-1 ${
+                                option.answer
+                                  ? "border-green-500 bg-green-50"
+                                  : ""
+                              }`}
                             />
-                          </div>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() =>
-                              handleRemoveLessonFromModule(module.id, lesson.id)
-                            }
-                            className="text-red-500 hover:text-red-700 ml-2"
-                          >
-                            <X className="h-4 w-4" />
-                          </Button>
-                        </div>
-
-                        <div className="space-y-2">
-                          <Label>Video</Label>
-                          {lesson.video_link ? (
-                            <div className="flex items-center justify-between bg-gray-50 p-2 rounded">
-                              <div className="flex items-center gap-2 overflow-hidden">
-                                <Video className="h-4 w-4 text-blue-600 shrink-0" />
-                                <span className="text-sm truncate">
-                                  Video uploaded
-                                </span>
-                              </div>
+                            {question.options.length > 2 && (
                               <Button
-                                variant="outline"
-                                size="sm"
+                                variant="ghost"
+                                size="icon"
                                 onClick={() =>
-                                  handleVideoUpload(module.id, lesson.id)
+                                  handleRemoveOption(question.id, option.id)
                                 }
+                                className="text-red-500 hover:text-red-700"
                               >
-                                Change
+                                <X className="h-4 w-4" />
                               </Button>
-                            </div>
-                          ) : (
-                            <Button
-                              variant="outline"
-                              onClick={() =>
-                                handleVideoUpload(module.id, lesson.id)
-                              }
-                              className="w-full"
-                            >
-                              <Video className="h-4 w-4 mr-2" />
-                              Upload Video
-                            </Button>
-                          )}
-                        </div>
+                            )}
+                          </div>
+                        ))}
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleAddOption(question.id)}
+                          className="text-blue-600 hover:text-blue-700"
+                        >
+                          <Plus className="w-4 h-4 mr-2" />
+                          Add Option
+                        </Button>
                       </div>
-                    ))}
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleAddLessonToModule(module.id)}
-                      className="w-full text-blue-600 border-blue-600 hover:bg-blue-50"
-                    >
-                      <Plus className="h-4 w-4 mr-2" />
-                      Add Lesson
-                    </Button>
+                    </div>
+                  </div>
+                ))}
+
+                <Button
+                  variant="outline"
+                  onClick={handleAddQuestion}
+                  className="w-full border-blue-600 text-blue-600 hover:bg-blue-50"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Question
+                </Button>
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <h2 className="text-xl font-semibold">Course Modules</h2>
+                    <p className="text-sm text-gray-500">
+                      Organize your course content into modules
+                    </p>
                   </div>
                 </div>
+
+                {modules.map((module, moduleIndex) => (
+                  <div
+                    key={module.id}
+                    className="p-4 border rounded-md bg-white shadow-sm"
+                  >
+                    <div className="flex justify-between items-center mb-4">
+                      <span className="text-blue-600 font-semibold">
+                        Module #{moduleIndex + 1}
+                      </span>
+                      {modules.length > 1 && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => handleRemoveModule(module.id)}
+                          className="text-red-500 hover:text-red-700"
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
+                      )}
+                    </div>
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor={`module-title-${module.id}`}>
+                          Title
+                        </Label>
+                        <Input
+                          id={`module-title-${module.id}`}
+                          type="text"
+                          placeholder="Enter module title"
+                          value={module.title}
+                          onChange={(e) =>
+                            handleModuleTitleChange(module.id, e.target.value)
+                          }
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor={`module-desc-${module.id}`}>
+                          Description
+                        </Label>
+                        <Textarea
+                          id={`module-desc-${module.id}`}
+                          placeholder="Enter module description"
+                          value={module.description}
+                          onChange={(e) =>
+                            handleModuleDescriptionChange(
+                              module.id,
+                              e.target.value
+                            )
+                          }
+                          rows={3}
+                        />
+                      </div>
+
+                      <div className="space-y-4">
+                        <h3 className="font-medium">Lessons</h3>
+                        {module.lessons.map((lesson, lessonIndex) => (
+                          <div
+                            key={lesson.id}
+                            className="border rounded-md p-4 space-y-4"
+                          >
+                            <div className="flex justify-between items-center">
+                              <div className="flex items-center gap-2 flex-1">
+                                <span className="text-gray-500 font-medium">
+                                  #{lessonIndex + 1}
+                                </span>
+                                <Input
+                                  type="text"
+                                  placeholder="Enter lesson title"
+                                  value={lesson.title}
+                                  onChange={(e) =>
+                                    handleLessonTitleChange(
+                                      module.id,
+                                      lesson.id,
+                                      e.target.value
+                                    )
+                                  }
+                                  className="flex-1"
+                                />
+                              </div>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={() =>
+                                  handleRemoveLessonFromModule(
+                                    module.id,
+                                    lesson.id
+                                  )
+                                }
+                                className="text-red-500 hover:text-red-700 ml-2"
+                              >
+                                <X className="h-4 w-4" />
+                              </Button>
+                            </div>
+
+                            <div className="space-y-2">
+                              <Label>Video</Label>
+                              {lesson.video_link ? (
+                                <div className="flex items-center justify-between bg-gray-50 p-2 rounded">
+                                  <div className="flex items-center gap-2 overflow-hidden">
+                                    <Video className="h-4 w-4 text-blue-600 shrink-0" />
+                                    <span className="text-sm truncate">
+                                      Video uploaded
+                                    </span>
+                                  </div>
+                                  <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() =>
+                                      handleVideoUpload(module.id, lesson.id)
+                                    }
+                                  >
+                                    Change
+                                  </Button>
+                                </div>
+                              ) : (
+                                <Button
+                                  variant="outline"
+                                  onClick={() =>
+                                    handleVideoUpload(module.id, lesson.id)
+                                  }
+                                  className="w-full"
+                                >
+                                  <Video className="h-4 w-4 mr-2" />
+                                  Upload Video
+                                </Button>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleAddLessonToModule(module.id)}
+                          className="w-full text-blue-600 border-blue-600 hover:bg-blue-50"
+                        >
+                          <Plus className="h-4 w-4 mr-2" />
+                          Add Lesson
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+
+                <Button
+                  variant="outline"
+                  onClick={handleAddModule}
+                  className="w-full border-blue-600 text-blue-600 hover:bg-blue-50"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Module
+                </Button>
               </div>
-            ))}
 
-            <Button
-              variant="outline"
-              onClick={handleAddModule}
-              className="w-full border-blue-600 text-blue-600 hover:bg-blue-50"
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Add Module
-            </Button>
+              <Button
+                onClick={handleSubmit}
+                disabled={isSubmitting}
+                className="w-full text-white py-2"
+              >
+                {isSubmitting ? "Creating Course..." : "Submit Course"}
+              </Button>
+            </div>
           </div>
-
-          <Button
-            onClick={handleSubmit}
-            disabled={isSubmitting}
-            className="w-full text-white py-2"
-          >
-            {isSubmitting ? "Creating Course..." : "Submit Course"}
-          </Button>
         </div>
-      </div>
-    </div>
-    </SidebarProvider>
+      </SidebarProvider>
     </>
   );
 }

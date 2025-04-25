@@ -502,10 +502,10 @@ export default function StudentDashboard() {
             </div>
           </SidebarFooter>
         </Sidebar>
-        
-        <SidebarTrigger className="h-10 w-10 mt-[30px] ml-[30px] lg:hidden border border-gray-300 rounded-md flex items-center justify-center">
-            <PanelLeft className="h-4 w-4" />
-          </SidebarTrigger>
+
+        <SidebarTrigger className="h-10 w-10 mt-[30px] ml-[30px] lg:hidden border border-gray-300 rounded-md flex items-center justify-center absolute right-4 bg-white">
+          <PanelLeft className="h-4 w-4" />
+        </SidebarTrigger>
         <div className="flex-1 p-8">
           <div className="flex items-center justify-between mb-8">
             <div>
