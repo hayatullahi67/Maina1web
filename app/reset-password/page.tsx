@@ -244,7 +244,7 @@ function ResetPasswordContent() {
               </Button>
             </CardFooter>
           </form>
-        </Card>
+        </Card>  
       </div>
     </div>
   );
