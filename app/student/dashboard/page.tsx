@@ -736,7 +736,7 @@ export default function StudentDashboard() {
                               <span className="text-xs text-muted-foreground ml-1"></span>
                             </div>
                             <span className="text-sm font-bold">
-                              ${course.price}
+                            ₦ {course.price}
                             </span>
                           </div>
                           <div className="mt-4 flex items-center justify-between">

@@ -634,9 +634,9 @@ export default function TeacherDashboard() {
   }, [instructorId, token, enrollmentIds, courses]);
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
+    return new Intl.NumberFormat('en-NG', {
+      style: 'currency',
+      currency: 'NGN',
     }).format(amount);
   };
 
@@ -947,7 +947,7 @@ export default function TeacherDashboard() {
                               Revenue
                             </span>
                             <span className="text-sm font-medium">
-                              ${course.price}
+                              ₦ {course.price}
                             </span>
                           </div>
                           <div className="flex items-center justify-between mb-2">

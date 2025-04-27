@@ -100,7 +100,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
           isCredit ? "text-[green]" : "text-[red]"
         }`}
       >
-        {isCredit ? "$ " : "- $ "}
+        {isCredit ? "₦ " : "- ₦ "}
         {amount}
       </div>
     </div>

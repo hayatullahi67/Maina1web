@@ -68,7 +68,7 @@ export default function CourseCard({ course }: CourseCardProps) {
           <CardFooter className="p-4 pt-0">
             <div className="flex w-full items-center justify-between">
               <span className="text-lg font-bold">
-                ${course.price}
+              ₦{course.price}
               </span>
               {/* <Badge className="transition-colors hover:bg-primary/90">
                 Enroll Now

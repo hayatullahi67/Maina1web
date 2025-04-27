@@ -993,7 +993,6 @@ const RequestPayOut = () => {
         account_number: accountNumber,
         currency: "NGN"
       };
-
       const response = await fetch(
         `https://api.a1schools.org/instructors/${instructor.id}/bank-account`,
         {

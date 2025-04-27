@@ -268,7 +268,7 @@ export default function Home() {
             <div className="text-white">
               <div>
                 <p>Total Balance</p>
-                <p>${parseFloat(instructor.wallet.balance).toFixed(2)}</p>
+                <p>₦{parseFloat(instructor.wallet.balance).toFixed(2)}</p>
               </div>
 
               <div>
