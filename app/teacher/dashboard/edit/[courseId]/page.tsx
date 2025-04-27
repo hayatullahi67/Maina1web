@@ -133,7 +133,7 @@ export default function EditCourse() {
           throw new Error("Failed to fetch course");
         }
 
-        const data = await response.json();
+        const  data = await response.json();
         setCourse({
           name: data.data.name,
           description: data.data.description,
