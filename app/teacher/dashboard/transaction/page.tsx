@@ -159,8 +159,7 @@ export default function Home() {
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   <Link href="/teacher/dashboard/transaction">
-                    <DollarSign className="h-4 w-4" />
-                    <span>Wallet</span>
+                    ₦<span>Wallet</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>

@@ -7,7 +7,7 @@ import {
   LayoutDashboard,
   PlusCircle,
   User,
-  Users
+  Users,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -706,8 +706,7 @@ export default function TeacherDashboard() {
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   <Link href="/teacher/dashboard/transaction">
-                    <DollarSign className="h-4 w-4" />
-                    <span>Wallet</span>
+                    ₦<span>Wallet</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
