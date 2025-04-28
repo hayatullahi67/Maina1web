@@ -1,10 +1,14 @@
 "use client";
 
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 import {
   BarChart3,
   BookOpen,
   DollarSign,
   LayoutDashboard,
+  PanelLeft,
   PlusCircle,
   User,
   Users,
@@ -30,6 +34,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
+  SidebarTrigger,
 } from "@/components/ui/sider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRouter } from "next/navigation";
@@ -629,9 +634,9 @@ export default function TeacherDashboard() {
   }, [instructorId, token, enrollmentIds, courses]);
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
+    return new Intl.NumberFormat('en-NG', {
+      style: 'currency',
+      currency: 'NGN',
     }).format(amount);
   };
 
@@ -661,8 +666,54 @@ export default function TeacherDashboard() {
     }
   };
 
+  const handleDeleteCourse = async (courseId: string) => {
+    // if (!window.confirm('Are you sure you want to delete this course?')) return;
+  
+    try {
+      const response = await fetch(`https://api.a1schools.org/courses/${courseId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${instructor.token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+  
+      if (response.ok) {
+        // Remove the deleted course from state
+        setCourses(prev => prev.filter(course => course.id !== courseId));
+        // Update total rating
+        // setTotalRating(prev => (prev || 0) - Number(courses.find(c => c.id === courseId)?.average_rating || 0));
+        toast.success("Course successfully deleted", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      } else {
+        const errorData = await response.json();
+        console.error('Delete failed:', errorData.message);
+        toast.error('Failed to delete course: ' + (errorData.message || 'Unknown error'));
+      }
+    } catch (error) {
+      console.error('Delete error:', error);
+      toast.error(error instanceof Error ? error.message : 'An error occurred while deleting the course', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
+
   return (
     <SidebarProvider>
+      <ToastContainer />
       <div className="flex min-h-screen">
         <Sidebar>
           <SidebarHeader className="flex items-center gap-2 px-4">
@@ -764,6 +815,10 @@ export default function TeacherDashboard() {
             </div>
           </SidebarFooter>
         </Sidebar>
+
+        <SidebarTrigger className="h-10 w-10 mt-[30px] ml-[30px] lg:hidden border border-gray-300 rounded-md flex items-center justify-center absolute right-4 bg-white">
+          <PanelLeft className="h-4 w-4" />
+        </SidebarTrigger>
         <div className="flex-1 p-8">
           <div className="flex items-center justify-between mb-8">
             <div>
@@ -864,9 +919,7 @@ export default function TeacherDashboard() {
                   ) : (
                     coursesWithStudentCounts.map((course) => (
                       <Card
-                        onClick={() =>
-                          router.push(`/teacher/dashboard/edit/${course.id}`)
-                        }
+                        
                         key={course.id}
                         className="overflow-hidden w-[330px]"
                       >
@@ -893,7 +946,7 @@ export default function TeacherDashboard() {
                               Revenue
                             </span>
                             <span className="text-sm font-medium">
-                              ${course.price}
+                              ₦ {course.price}
                             </span>
                           </div>
                           <div className="flex items-center justify-between mb-2">
@@ -912,7 +965,19 @@ export default function TeacherDashboard() {
                               Last updated:{" "}
                               {new Date(course.updated_at).toLocaleDateString()}
                             </span>
-                            <Button size="sm">Edit</Button>
+
+                            <Button 
+                               size="sm" 
+                               className="bg-[red] hover:bg-[#ff0000cc]"
+                               onClick={() => handleDeleteCourse(course.id)}
+                             >
+                               Delete
+                             </Button>
+
+                            <Button onClick={() =>
+                          router.push(`/teacher/dashboard/edit/${course.id}`)
+                        } size="sm">Edit</Button>
+                           
                           </div>
                         </CardContent>
                       </Card>
