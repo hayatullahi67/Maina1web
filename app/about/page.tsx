@@ -10,7 +10,7 @@ import { AiFillStar } from "react-icons/ai";
 import girl from "@/public/images/A1logo2.png"
 import uxdesigner from "@/public/images/uxdesigner.jpeg"
 import david from "@/public/images/david.jpeg"
-import A1logo from "@/public/images/A1logo2.png"
+import A1logo from "@/public/images/A1logo3.jpg"
 
 
 import { Button } from "@/components/ui/button";
@@ -60,11 +60,8 @@ export default function AboutPage() {
             <div className="max-w-3xl mx-auto text-center mb-10 md:mb-16">
               <h2 className="text-2xl md:text-3xl font-bold mb-4">Our Story</h2>
               <p className="text-gray-600">
-                Founded in 2015, our journey began with a simple idea: to make
-                education more accessible and engaging through technology. What
-                started as a small team of passionate educators and developers
-                has grown into a comprehensive learning platform trusted by
-                institutions worldwide.
+              Founded in the year 2025, our journey, began with a passion and a simple idea to make education, more accessible and engaging through technology. 
+              What’s we have just started, with passion, our educators, and developers will  grow this platform to become a trusted institutions used by many worldwide
               </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
@@ -239,7 +236,10 @@ export default function AboutPage() {
                 variant="outline"
                 className="border-white text-white hover:bg-white/10 font-medium px-6 py-2 rounded-full"
               >
-                   <Link href="/register">CONTACT SALES</Link>
+                <Link href="mailto:Victorkelechi044@gmail.com">CONTACT SALES</Link>
+
+                   {/* <Link href="Victorkelechi044@gmail.com">CONTACT SALES</Link> */}
+                   {/* <a href="Victorkelechi044@gmail.com">CONTACT SALES</a> */}
                 
               </Button>
            

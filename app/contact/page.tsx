@@ -47,7 +47,8 @@ export default function ContactPage() {
              href="mailto:info@a1.com"
              className="text-blue-600 hover:underline"
            >
-             info@a1.com
+             {/* victorkelechi044@gmail.com */}
+             support@aischool.com
            </a>
          </li>
          <li className="flex items-center justify-between">
@@ -59,10 +60,10 @@ export default function ContactPage() {
              href="mailto:partners@a1.com"
              className="text-blue-600 hover:underline"
            >
-             partners@a1.com
+            victorkelechi044@gmail.com
            </a>
          </li>
-         <li className="flex items-center justify-between">
+         {/* <li className="flex items-center justify-between">
            <div className="flex items-center space-x-3">
              <FaEnvelope className="text-blue-600 w-6 h-6" />
              <span>Job Opportunities</span>
@@ -73,7 +74,7 @@ export default function ContactPage() {
            >
              careers@a1.com
            </a>
-         </li>
+         </li> */}
        </ul>
      </section>
 
@@ -89,13 +90,13 @@ export default function ContactPage() {
              <span>General Inquiries</span>
            </div>
            <a
-             href="tel:+11112223333"
+             href="tel:+2349022803039"
              className="text-blue-600 hover:underline"
            >
-             +1 (111) 222-3333
+             +234 902 280 3039
            </a>
          </li>
-         <li className="flex items-center justify-between">
+         {/* <li className="flex items-center justify-between">
            <div className="flex items-center space-x-3">
              <FaPhoneAlt className="text-blue-600 w-6 h-6" />
              <span>Business Collaborations</span>
@@ -118,7 +119,7 @@ export default function ContactPage() {
            >
              +1 (777) 888-9999
            </a>
-         </li>
+         </li> */}
        </ul>
      </section>
 
@@ -131,17 +132,17 @@ export default function ContactPage() {
          <li className="flex items-start space-x-4">
            <FaMapMarkerAlt className="text-blue-600 w-6 h-6 mt-1" />
            <div>
-             <strong>New York City</strong>
-             <p>123 A1 Avenue, Suite 100, New York, NY 10001</p>
+             <strong>Abuja</strong>
+             <p>Alex Ekwueme way jabi Abuja, FCT</p>
            </div>
          </li>
-         <li className="flex items-start space-x-4">
+         {/* <li className="flex items-start space-x-4">
            <FaMapMarkerAlt className="text-blue-600 w-6 h-6 mt-1" />
            <div>
              <strong>San Francisco</strong>
              <p>456 A1 Street, Floor 5, San Francisco, CA 94105</p>
            </div>
-         </li>
+         </li> */}
        </ul>
      </section>
 
@@ -198,12 +199,15 @@ export default function ContactPage() {
          >
            Get Started
          </a>
-         <a
+         {/* <a
            href="/register"
            className="px-6 py-3 border border-white rounded-lg hover:bg-white/20"
          >
            Free Consultation
-         </a>
+         </a> */}
+         
+         <a className="px-6 py-3 border border-white rounded-lg hover:bg-white/20" href="mailto:Victorkelechi044@gmail.com"> Free Consultation</a>
+
        </div>
      </section>
 
