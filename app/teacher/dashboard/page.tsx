@@ -777,6 +777,14 @@ export default function TeacherDashboard() {
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
+              <SidebarMenuItem>
+                              <SidebarMenuButton asChild>
+                                <Link href="/teacher/dashboard/notificationpage">
+                                  <User className="h-4 w-4" />
+                                  <span>Notifications</span>
+                                </Link>
+                              </SidebarMenuButton>
+                            </SidebarMenuItem>
               {/* <SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   <Link href="/teacher/settings">

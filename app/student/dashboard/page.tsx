@@ -419,6 +419,7 @@ export default function StudentDashboard() {
   return (
     <SidebarProvider>
       <div className="flex min-h-screen">
+
         <Sidebar>
           <SidebarHeader className="flex items-center gap-2 px-4">
             <BookOpen className="h-6 w-6 text-primary" />
@@ -466,6 +467,14 @@ export default function StudentDashboard() {
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link href="/student/dashboard/notificationpage">
+                    <User className="h-4 w-4" />
+                    <span>Notification</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
               {/* <SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   <Link href="/student/settings">
@@ -506,6 +515,7 @@ export default function StudentDashboard() {
         <SidebarTrigger className="h-10 w-10 mt-[30px] ml-[30px] lg:hidden border border-gray-300 rounded-md flex items-center justify-center absolute right-4 bg-white">
           <PanelLeft className="h-4 w-4" />
         </SidebarTrigger>
+        
         <div className="flex-1 p-8">
           <div className="flex items-center justify-between mb-8">
             <div>

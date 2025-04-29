@@ -187,9 +187,9 @@
 
 
 import React, { useState, useEffect, useCallback } from "react";
-import { StudentNotificationList } from "./StudentNotificationList";
+import { StudentNotificationList } from "@/app/teacher/dashboard/StudentNotificationList";
 
-export interface Student {
+export interface Teacher {
   id: string;
   fullname: string;
   verified: boolean;
@@ -209,7 +209,7 @@ export default function StudentNotificationsPage() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   
-  const [student, setStudent] = useState<Student>({
+  const [teacher, setTeacher] = useState<Teacher>({
     fullname: "Loading...",
     email: "",
     id: "",
@@ -225,7 +225,7 @@ export default function StudentNotificationsPage() {
     if (stored) {
       const parsed = JSON.parse(stored);
       console.log("parsed", parsed);
-      setStudent({
+      setTeacher({
         fullname: parsed.fullname || "Student",
         email: parsed.email || "",
         id: parsed.id,
@@ -238,15 +238,15 @@ export default function StudentNotificationsPage() {
 
   // Create a memoized fetchNotifications function
   const fetchNotifications = useCallback(async () => {
-    if (!student.id || !student.token) return;
+    if (!teacher.id || !teacher.token) return;
     
     setIsLoading(true);
     try {
       const response = await fetch(
-        `https://api.a1schools.org/users/${student.id}/notifications`,
+        `https://api.a1schools.org/users/${teacher.id}/notifications`,
         {
           headers: {
-            Authorization: `Bearer ${student.token}`,
+            Authorization: `Bearer ${teacher.token}`,
           },
         }
       );
@@ -262,17 +262,17 @@ export default function StudentNotificationsPage() {
     } finally {
       setIsLoading(false);
     }
-  }, [student.id, student.token]);
+  }, [teacher.id, teacher.token]);
 
   // Fetch notifications when student data is loaded
   useEffect(() => {
-    if (!student.id || !student.token) return;
+    if (!teacher.id || !teacher.token) return;
     fetchNotifications();
-  }, [student.id, student.token, fetchNotifications]);
+  }, [teacher.id, teacher.token, fetchNotifications]);
 
   // Set up polling to check for new notifications periodically
   useEffect(() => {
-    if (!student.id || !student.token) return;
+    if (!teacher.id || !teacher.token) return;
     
     // Poll for new notifications every 30 seconds
     const intervalId = setInterval(() => {
@@ -281,7 +281,7 @@ export default function StudentNotificationsPage() {
     
     // Clean up interval on component unmount
     return () => clearInterval(intervalId);
-  }, [student.id, student.token, fetchNotifications]);
+  }, [teacher.id, teacher.token, fetchNotifications]);
 
   // Function to manually refresh notifications
   const refreshNotifications = () => {
@@ -292,11 +292,11 @@ export default function StudentNotificationsPage() {
     if (window.confirm("Remove notification?")) {
       try {
         const response = await fetch(
-          `https://api.a1schools.org/users/${student.id}/notifications/${id}`,
+          `https://api.a1schools.org/users/${teacher.id}/notifications/${id}`,
           {
             method: "DELETE",
             headers: {
-              Authorization: `Bearer ${student.token}`,
+              Authorization: `Bearer ${teacher.token}`,
             },
           }
         );
