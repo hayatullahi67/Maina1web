@@ -282,6 +282,7 @@ export default function RegisterPage() {
   return (
     <>
       <Header />
+      <div className="bg-gradient-to-r from-blue to-cyan">
       <div className="container flex  w-screen py-[50px]  flex-col items-center justify-center">
         {/* <Link
         href="/"
@@ -292,10 +293,10 @@ export default function RegisterPage() {
       </Link> */}
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
           <div className="flex flex-col space-y-2 text-center">
-            <h1 className="text-2xl font-semibold tracking-tight">
+            <h1 className="text-2xl font-semibold text-white tracking-tight">
               Create an account
             </h1>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white">
               Sign up to get started with your learning journey
             </p>
           </div>
@@ -604,7 +605,7 @@ export default function RegisterPage() {
               </Card>
             </TabsContent>
           </Tabs>
-          <p className="px-8 text-center text-sm text-muted-foreground">
+          <p className="px-8 text-center text-sm text-white">
             Already have an account?{" "}
             <Link
               href="/login"
@@ -614,6 +615,7 @@ export default function RegisterPage() {
             </Link>
           </p>
         </div>
+      </div>
       </div>
     </>
   );

@@ -226,7 +226,7 @@ const [mostRecentCourse, setMostRecentCourse] = useState<Course[]>([]);
   useEffect(() => {
     if (!isVisible) return;
     
-    const duration = 1000; // 1 seconds animation
+    const duration = 3000; // 1 seconds animation
     const frameDuration = 1000 / 60; // 60fps
     const totalFrames = Math.round(duration / frameDuration);
     
@@ -450,7 +450,7 @@ const [mostRecentCourse, setMostRecentCourse] = useState<Course[]>([]);
                         key={`${category.name}-${index}`}
                         className="w-full min-w-[150px] flex-1 sm:min-w-[180px]"
                       >
-                        <Link href={`/category/${category.slug}`}>
+                        <Link href='/login'>
                           <Card className="h-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 transition-all hover:shadow-md hover:scale-105">
                             <CardContent className="flex flex-col items-center justify-center p-6">
                               <category.icon className="h-10 w-10 mb-2 text-primary" />

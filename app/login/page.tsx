@@ -214,7 +214,8 @@ export default function LoginPage() {
   return (
     <>
       <Header />
-      <div className="container flex py-[50px]  w-screen flex-col items-center justify-center">
+      <div className="bg-gradient-to-r from-blue to-cyan">
+      <div className="container  flex py-[50px]   flex-col items-center justify-center">
         {/* <Link
         href="/"
         className="absolute left-4 top-4 flex items-center gap-2 md:left-8 md:top-8"
@@ -224,10 +225,10 @@ export default function LoginPage() {
       </Link> */}
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
           <div className="flex flex-col space-y-2 text-center">
-            <h1 className="text-2xl font-semibold tracking-tight">
+            <h1 className="text-2xl font-semibold text-white tracking-tight">
               Welcome back
             </h1>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white">
               Enter your credentials to sign in to your account
             </p>
           </div>
@@ -428,16 +429,17 @@ export default function LoginPage() {
               </Card>
             </TabsContent>
           </Tabs>
-          <p className="px-8 text-center text-sm text-muted-foreground">
-            Don not have an account?
+          <p className="px-8 text-center text-sm text-white">
+            Don not have an account? 
             <Link
               href="/register"
-              className="text-primary underline-offset-4 hover:underline"
+              className=" underline-offset-4 hover:underline"
             >
               Sign up
             </Link>
           </p>
         </div>
+      </div>
       </div>
     </>
   );
