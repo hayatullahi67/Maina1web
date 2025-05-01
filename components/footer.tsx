@@ -3,16 +3,16 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="w-full border-t bg-background py-[40px] md:py-12">
+    <footer className="w-full border-t bg-black py-[40px] md:py-12">
       <div className="container px-4 md:px-6">
         <div className="grid grid-cols-2 gap-10 sm:grid-cols-4">
           <div className="space-y-3">
-            <h3 className="text-lg font-medium">About</h3>
+            <h3 className="text-lg text-white font-medium">About</h3>
             <ul className="space-y-2">
               <li>
                 <Link
                   href="/about"
-                  className="text-sm text-muted-foreground hover:text-foreground"
+                  className="text-sm text-white "
                 >
                   About Us
                 </Link>
@@ -36,12 +36,12 @@ const Footer = () => {
             </ul>
           </div>
           <div className="space-y-3">
-            <h3 className="text-lg font-medium">Support</h3>
+            <h3 className="text-lg text-white font-medium">Support</h3>
             <ul className="space-y-2">
               <li>
                 <Link
                   href="/contact"
-                  className="text-sm text-muted-foreground hover:text-foreground"
+                  className="text-sm text-white "
                 >
                   Contact Us
                 </Link>
@@ -65,12 +65,12 @@ const Footer = () => {
             </ul>
           </div>
           <div className="space-y-3">
-            <h3 className="text-lg font-medium">Legal</h3>
+            <h3 className="text-lg text-white font-medium">Legal</h3>
             <ul className="space-y-2">
               <li>
                 <Link
                   href="/terms"
-                  className="text-sm text-muted-foreground hover:text-foreground"
+                  className="text-sm text-white "
                 >
                   Terms of Service
                 </Link>
@@ -78,7 +78,7 @@ const Footer = () => {
               <li>
                 <Link
                   href="/privacy"
-                  className="text-sm text-muted-foreground hover:text-foreground"
+                  className="text-sm text-white"
                 >
                   Privacy Policy
                 </Link>
@@ -94,7 +94,7 @@ const Footer = () => {
             </ul>
           </div>
           <div className="space-y-3">
-            <h3 className="text-lg font-medium">Connect</h3>
+            <h3 className="text-lg font-medium text-white">Connect</h3>
             <ul className="space-y-2">
               {/* <li>
                 <Link
@@ -115,7 +115,7 @@ const Footer = () => {
               <li>
                 <Link
                   href="https://www.instagram.com/officiala1school "
-                  className="text-sm text-muted-foreground hover:text-foreground"
+                  className="text-sm text-white"
                 >
                   Instagram
                 </Link>

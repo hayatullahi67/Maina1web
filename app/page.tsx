@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import girl from "@/public/images/girl.jpeg"
@@ -183,6 +183,76 @@ const [mostRecentCourse, setMostRecentCourse] = useState<Course[]>([]);
       },
     },
   };
+
+  const [isVisible, setIsVisible] = useState(false);
+  const [counters, setCounters] = useState({
+    students: 0,
+    courses: 0,
+    completion: 0,
+    satisfaction: 0
+  });
+  
+  const statsRef = useRef(null);
+  
+  const targetValues = {
+    students: 10,
+    courses: 500,
+    completion: 100,
+    satisfaction: 4.8
+  };
+  
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+    
+    if (statsRef.current) {
+      observer.observe(statsRef.current);
+    }
+    
+    return () => {
+      if (statsRef.current) {
+        observer.unobserve(statsRef.current);
+      }
+    };
+  }, []);
+  
+  useEffect(() => {
+    if (!isVisible) return;
+    
+    const duration = 1000; // 1 seconds animation
+    const frameDuration = 1000 / 60; // 60fps
+    const totalFrames = Math.round(duration / frameDuration);
+    
+    let frame = 0;
+    
+    const timer = setInterval(() => {
+      frame++;
+      
+      const progress = frame / totalFrames;
+      const easeOutQuad = progress * (2 - progress); // Easing function for smoother animation
+      
+      setCounters({
+        students: Math.floor(easeOutQuad * targetValues.students),
+        courses: Math.floor(easeOutQuad * targetValues.courses),
+        completion: Math.floor(easeOutQuad * targetValues.completion),
+        satisfaction: Number((easeOutQuad * targetValues.satisfaction).toFixed(1))
+      });
+      
+      if (frame === totalFrames) {
+        clearInterval(timer);
+      }
+    }, frameDuration);
+    
+    return () => clearInterval(timer);
+  }, [isVisible]);
+  
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -412,7 +482,7 @@ const [mostRecentCourse, setMostRecentCourse] = useState<Course[]>([]);
         </section>
 
         {/* Featured Courses */}
-        <section className="w-full py-12 md:py-24 bg-muted/50">
+        <section className="w-full  py-12 md:py-24 bg-muted/50">
           <div className="container px-4 md:px-6">
             <motion.div
               className="flex flex-col items-center justify-center space-y-4 text-center"
@@ -422,10 +492,10 @@ const [mostRecentCourse, setMostRecentCourse] = useState<Course[]>([]);
               transition={{ duration: 0.5 }}
             >
               <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+                <h2 className="text-3xl  font-bold tracking-tighter sm:text-4xl md:text-5xl">
                   Featured Courses
                 </h2>
-                <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                <p className="max-w-[900px]  text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   Discover our most popular and highly-rated courses
                 </p>
               </div>
@@ -447,13 +517,14 @@ const [mostRecentCourse, setMostRecentCourse] = useState<Course[]>([]);
                 <Link href="/register">
                 <motion.div
                   className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-                  initial="hidden"
+                  // initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
                   variants={staggerContainer}
+                  //  variants={fadeInUp}
                 >
                   {firstFourCourses.map((course) => (
-                    <motion.div key={course.id} variants={fadeInUp}>
+                    <motion.div key={course.id} variants={fadeInUp} className="shadow-lg shadow-blue-500/20">
                       <CourseCard course={course} />
                     </motion.div>
                   ))}
@@ -522,7 +593,7 @@ const [mostRecentCourse, setMostRecentCourse] = useState<Course[]>([]);
         </section>
 
         {/* Stats Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32">
+        <section ref={statsRef} className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <motion.div
               className="grid gap-6 sm:grid-cols-2 md:grid-cols-4"
@@ -543,7 +614,7 @@ const [mostRecentCourse, setMostRecentCourse] = useState<Course[]>([]);
                   viewport={{ once: true }}
                   transition={{ duration: 1, delay: 0.2 }}
                 >
-                  10K+
+                  {counters.students.toLocaleString()}K+
                 </motion.h3>
                 <p className="text-center text-muted-foreground">
                   Active Students
@@ -561,7 +632,7 @@ const [mostRecentCourse, setMostRecentCourse] = useState<Course[]>([]);
                   viewport={{ once: true }}
                   transition={{ duration: 1, delay: 0.4 }}
                 >
-                  500+
+                {counters.courses}+
                 </motion.h3>
                 <p className="text-center text-muted-foreground">
                   Quality Courses
@@ -579,7 +650,7 @@ const [mostRecentCourse, setMostRecentCourse] = useState<Course[]>([]);
                   viewport={{ once: true }}
                   transition={{ duration: 1, delay: 0.6 }}
                 >
-                  100%
+                  {counters.completion}%
                 </motion.h3>
                 <p className="text-center text-muted-foreground">
                   Completion Rate
@@ -597,7 +668,7 @@ const [mostRecentCourse, setMostRecentCourse] = useState<Course[]>([]);
                   viewport={{ once: true }}
                   transition={{ duration: 1, delay: 0.8 }}
                 >
-                  4.8/5
+                 {counters.satisfaction}/5
                 </motion.h3>
                 <p className="text-center text-muted-foreground">
                   Student Satisfaction
@@ -634,7 +705,7 @@ const [mostRecentCourse, setMostRecentCourse] = useState<Course[]>([]);
               variants={staggerContainer}
             >
               {testimonials.map((testimonial) => (
-                <motion.div key={testimonial.id} variants={fadeInUp}>
+                <motion.div key={testimonial.id} variants={fadeInUp} className="shadow-lg rounded-lg">
                   <TestimonialCard testimonial={testimonial} />
                 </motion.div>
               ))}
@@ -680,7 +751,7 @@ const [mostRecentCourse, setMostRecentCourse] = useState<Course[]>([]);
                 <Link href="/register">
                   <Button
                     size="lg"
-                    variant="outline"
+                    variant="secondary"
                     className="w-full min-[400px]:w-auto border-primary-foreground"
                   >
                     Browse Courses

@@ -20,7 +20,7 @@ interface TestimonialCardProps {
 export default function TestimonialCard({ testimonial }: TestimonialCardProps) {
   return (
     <motion.div whileHover={{ y: -5 }} transition={{ duration: 0.2 }}>
-      <Card className="h-full overflow-hidden">
+      <Card className="h-full overflow-hidden bg-[blue]">
         <CardContent className="p-6">
           <div className="flex flex-col space-y-4">
             <div className="flex items-center space-x-4">
@@ -32,8 +32,8 @@ export default function TestimonialCard({ testimonial }: TestimonialCardProps) {
                 className="rounded-full w-[50px] h-[50px]"
               />
               <div>
-                <h4 className="font-semibold">{testimonial.name}</h4>
-                <p className="text-sm text-muted-foreground">
+                <h4 className="font-semibold text-[white]">{testimonial.name}</h4>
+                <p className="text-sm text-[white]">
                   {testimonial.role}
                 </p>
               </div>
@@ -44,7 +44,7 @@ export default function TestimonialCard({ testimonial }: TestimonialCardProps) {
                   key={i}
                   className={`h-4 w-4 ${
                     i < testimonial.rating
-                      ? "fill-primary text-primary"
+                      ? "fill-primary text-[white]"
                       : "text-muted"
                   }`}
                 />
@@ -56,7 +56,7 @@ export default function TestimonialCard({ testimonial }: TestimonialCardProps) {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <p className="text-muted-foreground">{testimonial.content}</p>
+              <p className="text-[white]">{testimonial.content}</p>
             </motion.div>
           </div>
         </CardContent>
