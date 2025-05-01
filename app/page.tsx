@@ -29,6 +29,9 @@ import TestimonialCard from "@/components/testimonial-card";
 import ParticlesBackground from "@/components/particles-background";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import hero from "@/public/images/online.webp"
+// import bg from "@/public/images/bgvideo.mp4"
+
 
 export type Course = {
   name: string;
@@ -186,8 +189,16 @@ const [mostRecentCourse, setMostRecentCourse] = useState<Course[]>([]);
       <Header />
       <main className="flex-1">
         {/* Hero Section with Animated Background */}
-        <section className="relative w-full overflow-hidden bg-gradient-to-r from-primary/10 via-primary/5 to-background py-12 md:py-24 lg:py-32">
+        <section className="relative w-full overflow-hidden bg-gradient-to-r from-primary/10 via-primary/5 to-background py-12 md:py-24 lg:py-[190px]">
           <ParticlesBackground />
+          <video
+        className="absolute top-0 left-0 w-full h-full object-cover"
+        src={"/images/bgvideo.mp4"}
+        autoPlay
+        loop
+        muted
+        playsInline
+      />
           <div className="container relative px-4 md:px-6">
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
               <motion.div
@@ -195,16 +206,17 @@ const [mostRecentCourse, setMostRecentCourse] = useState<Course[]>([]);
                 initial="hidden"
                 animate="visible"
                 variants={fadeInUp}
+
               >
                 <div className="space-y-2">
                   <motion.h1
-                    className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none"
+                    className="text-3xl font-bold text-[white] tracking-tighter sm:text-5xl xl:text-6xl/none"
                     variants={fadeInUp}
                   >
                     Learn Without Limits
                   </motion.h1>
                   <motion.p
-                    className="max-w-[600px] text-muted-foreground md:text-xl"
+                    className="max-w-[600px] text-[white] md:text-xl"
                     variants={fadeInUp}
                   >
                     Start, switch, or advance your career with thousands of
@@ -238,7 +250,7 @@ const [mostRecentCourse, setMostRecentCourse] = useState<Course[]>([]);
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                <div className="relative">
+                {/* <div className="relative">
                   <motion.div
                     className="absolute -inset-4 rounded-xl bg-primary/10 blur-xl"
                     animate={{
@@ -252,7 +264,7 @@ const [mostRecentCourse, setMostRecentCourse] = useState<Course[]>([]);
                     }}
                   />
                   <Image
-                    src="/images/hero.png"
+                    src={hero}
                     width={550}
                     height={550}
                     alt="Hero Image"
@@ -287,7 +299,7 @@ const [mostRecentCourse, setMostRecentCourse] = useState<Course[]>([]);
                       </span>
                     </div>
                   </motion.div>
-                </div>
+                </div> */}
               </motion.div>
             </div>
           </div>
