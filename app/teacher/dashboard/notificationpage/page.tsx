@@ -111,8 +111,8 @@ export default function NotificationPage() {
   return (
   <>
   <SidebarProvider >
-  <Sidebar>
-          <SidebarHeader className="flex items-center gap-2 px-4">
+  <Sidebar className="bg-[#1e293b]">
+          <SidebarHeader className="flex text-[#f8fafc] items-center gap-2 px-4">
             <BookOpen className="h-6 w-6 text-primary" />
             <span className="font-bold">A1 School</span>
           </SidebarHeader>
@@ -173,15 +173,14 @@ export default function NotificationPage() {
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
-
               <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <Link href="/teacher/dashboard/notificationpage">
-                    <User className="h-4 w-4" />
-                    <span>Notifications</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
+                              <SidebarMenuButton asChild>
+                                <Link href="/teacher/dashboard/notificationpage">
+                                  <User className="h-4 w-4" />
+                                  <span>Notifications</span>
+                                </Link>
+                              </SidebarMenuButton>
+                            </SidebarMenuItem>
               {/* <SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   <Link href="/teacher/settings">
@@ -194,7 +193,7 @@ export default function NotificationPage() {
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   <button onClick={handleLogout}>
-                    <span className="text-[red]">Log Out</span>
+                    <span className="">Log Out</span>
                   </button>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -209,11 +208,11 @@ export default function NotificationPage() {
                 alt="User avatar"
                 className="rounded-full"
               />
-              <div className="flex flex-col">
+              <div className="flex flex-col text-[#f8fafc]">
                 <span className="text-sm font-medium">
                   {instructor.fullname}
                 </span>
-                <span className="text-xs text-muted-foreground">
+                <span className="text-xs ">
                   {instructor.email}
                 </span>
               </div>

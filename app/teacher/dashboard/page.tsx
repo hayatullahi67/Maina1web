@@ -714,9 +714,9 @@ export default function TeacherDashboard() {
   return (
     <SidebarProvider>
       <ToastContainer />
-      <div className="flex min-h-screen">
-        <Sidebar>
-          <SidebarHeader className="flex items-center gap-2 px-4">
+      <div className="flex min-h-screen bg-[#F8F9FA] w-[100%]">
+        <Sidebar className="bg-[#1e293b]">
+          <SidebarHeader className="flex text-[#f8fafc] items-center gap-2 px-4">
             <BookOpen className="h-6 w-6 text-primary" />
             <span className="font-bold">A1 School</span>
           </SidebarHeader>
@@ -797,7 +797,7 @@ export default function TeacherDashboard() {
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   <button onClick={handleLogout}>
-                    <span className="text-[red]">Log Out</span>
+                    <span className="">Log Out</span>
                   </button>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -812,11 +812,11 @@ export default function TeacherDashboard() {
                 alt="User avatar"
                 className="rounded-full"
               />
-              <div className="flex flex-col">
+              <div className="flex flex-col text-[#f8fafc]">
                 <span className="text-sm font-medium">
                   {instructor.fullname}
                 </span>
-                <span className="text-xs text-muted-foreground">
+                <span className="text-xs ">
                   {instructor.email}
                 </span>
               </div>
@@ -850,7 +850,7 @@ export default function TeacherDashboard() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            <Card>
+            <Card className="bg-white rounded-lg shadow-lg">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">
                   Active Courses
@@ -864,7 +864,7 @@ export default function TeacherDashboard() {
                 </p> */}
               </CardContent>
             </Card>
-            <Card>
+            <Card className="bg-white rounded-lg shadow-lg">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">
                   Total Students
@@ -878,7 +878,7 @@ export default function TeacherDashboard() {
                 </p> */}
               </CardContent>
             </Card>
-            <Card>
+            <Card className="bg-white rounded-lg shadow-lg">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">
                   Total Earnings
@@ -895,7 +895,7 @@ export default function TeacherDashboard() {
                 </p> */}
               </CardContent>
             </Card>
-            <Card>
+            <Card className="bg-white rounded-lg shadow-lg">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">
                   Average Rating
@@ -929,7 +929,7 @@ export default function TeacherDashboard() {
                       <Card
                         
                         key={course.id}
-                        className="overflow-hidden w-[330px]"
+                        className="overflow-hidden w-[330px] bg-white rounded-lg shadow-lg"
                       >
                         <div className="aspect-video w-full overflow-hidden">
                           <Image
@@ -995,7 +995,7 @@ export default function TeacherDashboard() {
               </TabsContent>
               <TabsContent value="students">
                 <div className="grid gap-6 md:grid-cols-2  lg:grid-cols-3"></div>
-                <Card>
+                <Card className="bg-white rounded-lg shadow-lg">
                   <CardHeader>
                     <CardTitle> Enrolled Students</CardTitle>
                     <CardDescription>

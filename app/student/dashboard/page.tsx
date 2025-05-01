@@ -418,10 +418,10 @@ export default function StudentDashboard() {
 
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen">
+      <div className="flex bg-[#F8F9FA] w-[100%]">
 
         <Sidebar>
-          <SidebarHeader className="flex items-center gap-2 px-4">
+          <SidebarHeader className="flex text-[#f8fafc] items-center gap-2 px-4">
             <BookOpen className="h-6 w-6 text-primary" />
             <span className="font-bold">A1 School</span>
           </SidebarHeader>
@@ -487,13 +487,13 @@ export default function StudentDashboard() {
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   <button onClick={handleLogout}>
-                    <span className="text-[red]">Log Out</span>
+                    <span >Log Out</span>
                   </button>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarContent>
-          <SidebarFooter className="p-4">
+          <SidebarFooter className="p-4 text-[#f8fafc]">
             <div className="flex items-center gap-3">
               <Image
                 src="/placeholder.svg?height=40&width=40"
@@ -504,7 +504,7 @@ export default function StudentDashboard() {
               />
               <div className="flex flex-col">
                 <span className="text-sm font-medium">{student.fullname}</span>
-                <span className="text-xs text-muted-foreground">
+                <span className="text-xs text-muted-[#f8fafc]">
                   {student.email}
                 </span>
               </div>
@@ -516,7 +516,7 @@ export default function StudentDashboard() {
           <PanelLeft className="h-4 w-4" />
         </SidebarTrigger>
         
-        <div className="flex-1 p-8">
+        <div className="flex-1 p-8 ">
           <div className="flex items-center justify-between mb-8">
             <div>
               <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
@@ -531,7 +531,7 @@ export default function StudentDashboard() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <Card>
+            <Card className="bg-white rounded-lg shadow-lg">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">
                   Courses Enrolled
@@ -545,7 +545,7 @@ export default function StudentDashboard() {
                 </p> */}
               </CardContent>
             </Card>
-            <Card>
+            <Card className="bg-white rounded-lg shadow-lg">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">
                   Completed Courses
@@ -575,7 +575,7 @@ export default function StudentDashboard() {
                 </p> 
               </CardContent>
             </Card> */}
-            <Card>
+            <Card className="bg-white rounded-lg shadow-lg">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">
                   Certificates
@@ -610,7 +610,7 @@ export default function StudentDashboard() {
                     courses.map((course) => (
                       <Card
                         key={course.id}
-                        className="w-[320px] overflow-hidden"
+                        className="w-[320px] overflow-hidden bg-white rounded-lg shadow-lg"
                       >
                         <div className="aspect-video w-full overflow-hidden">
                           <Image
@@ -665,7 +665,7 @@ export default function StudentDashboard() {
                     <>You have not completed any courses</>
                   ) : (
                     completedCourses.map((course) => (
-                      <Card key={course.id} className="overflow-hidden">
+                      <Card key={course.id} className="overflow-hidden bg-white rounded-lg shadow-lg">
                         <div className="aspect-video w-full overflow-hidden">
                           <Image
                             src={course.image_link || "/placeholder.svg"}
@@ -718,7 +718,7 @@ export default function StudentDashboard() {
                     </p>
                   ) : (
                     allcourses.map((course) => (
-                      <Card key={course.id} className="overflow-hidden">
+                      <Card key={course.id} className="overflow-hidden bg-white rounded-lg shadow-lg">
                         <div className="aspect-video w-full overflow-hidden">
                           <img
                             src={course.image_link}

@@ -947,27 +947,27 @@ const RequestPayOut = () => {
     }
   };
 
-  // const handleContinue = () => {
-  //   // Validate inputs
-  //   if (!selectedBank) {
-  //     toast.error("Please select a bank");
-  //     return;
-  //   }
+  const handleContinue = () => {
+    // Validate inputs
+    if (!selectedBank) {
+      toast.error("Please select a bank");
+      return;
+    }
     
-  //   if (accountNumber.length !== 10) {
-  //     toast.error("Account number must be 10 digits");
-  //     return;
-  //   }
+    if (accountNumber.length !== 10) {
+      toast.error("Account number must be 10 digits");
+      return;
+    }
     
-  //   const amountValue = parseFloat(payoutAmount);
-  //   if (isNaN(amountValue) || amountValue < 100) {
-  //     toast.error("The minimum withdrawal amount is ₦100");
-  //     return;
-  //   }
+    const amountValue = parseFloat(payoutAmount);
+    if (isNaN(amountValue) || amountValue < 100) {
+      toast.error("The minimum withdrawal amount is ₦100");
+      return;
+    }
     
-  //   // Verify account details and proceed to confirmation
-  //   verifyAccountDetails();
-  // };
+    // Verify account details and proceed to confirmation
+    verifyAccountDetails();
+  };
 
   // const handleContinue = async () => {
   //   // Check if account number is exactly 10 digits
@@ -1121,119 +1121,119 @@ const RequestPayOut = () => {
   // };
 
 
-  const handleContinue = async () => {
-    // Form validation
-    if (!accountNumber) {
-      toast.error("Please enter your account number");
-      return;
-    }
+  // const handleContinue = async () => {
+  //   // Form validation
+  //   if (!accountNumber) {
+  //     toast.error("Please enter your account number");
+  //     return;
+  //   }
   
-    if (!selectedBank) {
-      toast.error("Please select a bank");
-      return;
-    }
+  //   if (!selectedBank) {
+  //     toast.error("Please select a bank");
+  //     return;
+  //   }
   
-    if (accountNumber.length !== 10) {
-      toast.error("Account number must be exactly 10 digits");
-      return;
-    }
+  //   if (accountNumber.length !== 10) {
+  //     toast.error("Account number must be exactly 10 digits");
+  //     return;
+  //   }
   
-    try {
-      setIsLoading(true);
-      const payload = {
-        account_bank: selectedBank.code,
-        account_number: accountNumber,
-        currency: "NGN"
-      };
+  //   try {
+  //     setIsLoading(true);
+  //     const payload = {
+  //       account_bank: selectedBank.code,
+  //       account_number: accountNumber,
+  //       currency: "NGN"
+  //     };
   
-      // Step 1: Add bank account
-      const response = await fetch(
-        `https://api.a1schools.org/instructors/${instructor.id}/bank-account`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${instructor.token}`
-          },
-          body: JSON.stringify(payload)
-        }
-      );
+  //     // Step 1: Add bank account
+  //     const response = await fetch(
+  //       `https://api.a1schools.org/instructors/${instructor.id}/bank-account`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           "Authorization": `Bearer ${instructor.token}`
+  //         },
+  //         body: JSON.stringify(payload)
+  //       }
+  //     );
   
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || "Failed to add bank account");
-      }
+  //     if (!response.ok) {
+  //       const errorData = await response.json().catch(() => ({}));
+  //       throw new Error(errorData.message || "Failed to add bank account");
+  //     }
       
-      // Step 2: Get the updated bank accounts to find the ID of the newly added account
-      const getBankResponse = await fetch(
-        `https://api.a1schools.org/instructors/${instructor.id}/bank-account`,
-        {
-          method: "GET",
-          headers: {
-            "Authorization": `Bearer ${instructor.token}`
-          }
-        }
-      );
+  //     // Step 2: Get the updated bank accounts to find the ID of the newly added account
+  //     const getBankResponse = await fetch(
+  //       `https://api.a1schools.org/instructors/${instructor.id}/bank-account`,
+  //       {
+  //         method: "GET",
+  //         headers: {
+  //           "Authorization": `Bearer ${instructor.token}`
+  //         }
+  //       }
+  //     );
   
-      if (!getBankResponse.ok) {
-        throw new Error("Bank account was added but couldn't retrieve account details");
-      }
+  //     if (!getBankResponse.ok) {
+  //       throw new Error("Bank account was added but couldn't retrieve account details");
+  //     }
   
-      const bankData = await getBankResponse.json();
+  //     const bankData = await getBankResponse.json();
       
-      // Check if we have bank account data
-      if (bankData && bankData.data) {
-        // Find the bank account that matches our recently added details
-        const addedBank = Array.isArray(bankData.data) 
-          ? bankData.data.find((bank: any ) => 
-              bank.account_number === accountNumber && 
-              bank.account_bank === selectedBank.code
-            )
-          : bankData.data;
+  //     // Check if we have bank account data
+  //     if (bankData && bankData.data) {
+  //       // Find the bank account that matches our recently added details
+  //       const addedBank = Array.isArray(bankData.data) 
+  //         ? bankData.data.find((bank: any ) => 
+  //             bank.account_number === accountNumber && 
+  //             bank.account_bank === selectedBank.code
+  //           )
+  //         : bankData.data;
   
-        if (addedBank && addedBank.id) {
-          // Step 3: Update the default status to true
-          const updateResponse = await fetch(
-            `https://api.a1schools.org/instructors/${instructor.id}/bank-account/${addedBank.id}`,
-            {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${instructor.token}`
-              },
-              body: JSON.stringify({ default: true })
-            }
-          );
+  //       if (addedBank && addedBank.id) {
+  //         // Step 3: Update the default status to true
+  //         const updateResponse = await fetch(
+  //           `https://api.a1schools.org/instructors/${instructor.id}/bank-account/${addedBank.id}`,
+  //           {
+  //             method: "PUT",
+  //             headers: {
+  //               "Content-Type": "application/json",
+  //               "Authorization": `Bearer ${instructor.token}`
+  //             },
+  //             body: JSON.stringify({ default: true })
+  //           }
+  //         );
   
-          if (!updateResponse.ok) {
-            console.warn("Failed to set bank as default, but bank was added successfully");
-          }
-        } else {
-          console.warn("Bank account added but couldn't find it in the retrieved data");
-        }
-      }
+  //         if (!updateResponse.ok) {
+  //           console.warn("Failed to set bank as default, but bank was added successfully");
+  //         }
+  //       } else {
+  //         console.warn("Bank account added but couldn't find it in the retrieved data");
+  //       }
+  //     }
   
-      toast.success("Bank account added successfully");
-      setAccountNumber("");
-      setBankSearchQuery("");
-      setSelectedBank(null);
-      setHasBankAccount(true); // Update bank account status
+  //     toast.success("Bank account added successfully");
+  //     setAccountNumber("");
+  //     setBankSearchQuery("");
+  //     setSelectedBank(null);
+  //     setHasBankAccount(true); // Update bank account status
   
-      // Continue with account verification
-      verifyAccountDetails();
-    } catch (error) {
-      console.error("Error adding bank account:", error);
-      // toast.error(error.message || "Failed to add bank account. Please try again.");
-      if (error instanceof Error) {
-        toast.error(error.message || "Failed to add bank account. Please try again.");
-      } else {
-        toast.error("Failed to add bank account. Please try again.");
-      }
+  //     // Continue with account verification
+  //     verifyAccountDetails();
+  //   } catch (error) {
+  //     console.error("Error adding bank account:", error);
+  //     // toast.error(error.message || "Failed to add bank account. Please try again.");
+  //     if (error instanceof Error) {
+  //       toast.error(error.message || "Failed to add bank account. Please try again.");
+  //     } else {
+  //       toast.error("Failed to add bank account. Please try again.");
+  //     }
       
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
 
   // const isFormValid = accountNumber.trim().length > 0 && selectedBank !== null;
@@ -1251,7 +1251,8 @@ const RequestPayOut = () => {
       };
 
       const response = await fetch(
-        `https://api.a1schools.org/instructors/${instructor.id}/request-payout`,
+        `https://api.a1schools.org/instructors/${instructor.id}/request-payout`
+        ,
         {
           method: "POST",
           headers: {
@@ -1486,108 +1487,114 @@ const RequestPayOut = () => {
   return (
     <>
     <SidebarProvider>
-           <Sidebar>
-                         <SidebarHeader className="flex items-center gap-2 px-4">
-                           <BookOpen className="h-6 w-6 text-primary" />
-                           <span className="font-bold">A1 School</span>
-                         </SidebarHeader>
-                         <SidebarContent>
-                           <SidebarMenu>
-                             <SidebarMenuItem>
-                               <SidebarMenuButton asChild isActive>
-                                 <Link href="/teacher/dashboard">
-                                   <LayoutDashboard className="h-4 w-4" />
-                                   <span>Dashboard</span>
-                                 </Link>
-                               </SidebarMenuButton>
-                             </SidebarMenuItem>
-                             {/* <SidebarMenuItem>
-                               <SidebarMenuButton asChild>
-                                 <Link href="/teacher/courses">
-                                   <BookOpen className="h-4 w-4" />
-                                   <span>My Courses</span>
-                                 </Link>
-                               </SidebarMenuButton>
-                             </SidebarMenuItem> */}
-                             {/* <SidebarMenuItem>
-                               <SidebarMenuButton asChild>
-                                 <Link href="/teacher/students">
-                                   <Users className="h-4 w-4" />
-                                   <span>Students</span>
-                                 </Link>
-                               </SidebarMenuButton>
-                             </SidebarMenuItem> */}
-                             {/* <SidebarMenuItem>
-                               <SidebarMenuButton asChild>
-                                 <Link href="/teacher/analytics">
-                                   <BarChart3 className="h-4 w-4" />
-                                   <span>Analytics</span>
-                                 </Link>
-                               </SidebarMenuButton>
-                             </SidebarMenuItem> */}
-                             <SidebarMenuItem>
-                               <SidebarMenuButton asChild>
-                                 <Link href="/teacher/dashboard/transaction">
-                                   <DollarSign className="h-4 w-4" />
-                                   <span>Wallet</span>
-                                 </Link>
-                               </SidebarMenuButton>
-                             </SidebarMenuItem>
-                             {/* <SidebarMenuItem>
-                               <SidebarMenuButton asChild>
-                                 <Link href="/teacher/messages">
-                                   <MessageSquare className="h-4 w-4" />
-                                   <span>Messages</span>
-                                 </Link>
-                               </SidebarMenuButton>
-                             </SidebarMenuItem> */}
-                             <SidebarMenuItem>
-                               <SidebarMenuButton asChild>
-                                 <Link href="/teacher/dashboard/profile">
-                                   <User className="h-4 w-4" />
-                                   <span>Profile</span>
-                                 </Link>
-                               </SidebarMenuButton>
-                             </SidebarMenuItem>
-                             {/* <SidebarMenuItem>
-                               <SidebarMenuButton asChild>
-                                 <Link href="/teacher/settings">
-                                   <Settings className="h-4 w-4" />
-                                   <span>Settings</span>
-                                 </Link>
-                               </SidebarMenuButton>
-                             </SidebarMenuItem> */}
-               
-                             <SidebarMenuItem>
-                                   <SidebarMenuButton asChild>
-                                    <button  onClick={handleLogout}>
-               
-                                    <span  className="text-[red]">Log Out</span>
-               
-                                    </button>
-                                     
-                                   </SidebarMenuButton>
-                                 </SidebarMenuItem>
-                           </SidebarMenu>
-                         </SidebarContent>
-                         <SidebarFooter className="p-4">
-                           <div className="flex items-center gap-3">
-                             <Image
-                               src="/placeholder.svg?height=40&width=40"
-                               width={40}
-                               height={40}
-                               alt="User avatar"
-                               className="rounded-full"
-                             />
-                             <div className="flex flex-col">
-                               <span className="text-sm font-medium">{instructor.fullname}</span>
-                               <span className="text-xs text-muted-foreground">
-                                 {instructor.email}
-                               </span>
-                             </div>
-                           </div>
-                         </SidebarFooter>
-                       </Sidebar>
+    <Sidebar className="bg-[#1e293b]">
+          <SidebarHeader className="flex text-[#f8fafc] items-center gap-2 px-4">
+            <BookOpen className="h-6 w-6 text-primary" />
+            <span className="font-bold">A1 School</span>
+          </SidebarHeader>
+          <SidebarContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild isActive>
+                  <Link href="/teacher/dashboard">
+                    <LayoutDashboard className="h-4 w-4" />
+                    <span>Dashboard</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              {/* <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link href="/teacher/courses">
+                    <BookOpen className="h-4 w-4" />
+                    <span>My Courses</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem> */}
+              {/* <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link href="/teacher/students">
+                    <Users className="h-4 w-4" />
+                    <span>Students</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem> */}
+              {/* <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link href="/teacher/analytics">
+                    <BarChart3 className="h-4 w-4" />
+                    <span>Analytics</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem> */}
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link href="/teacher/dashboard/transaction">
+                    ₦<span>Wallet</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              {/* <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link href="/teacher/messages">
+                    <MessageSquare className="h-4 w-4" />
+                    <span>Messages</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem> */}
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link href="/teacher/dashboard/profile">
+                    <User className="h-4 w-4" />
+                    <span>Profile</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                              <SidebarMenuButton asChild>
+                                <Link href="/teacher/dashboard/notificationpage">
+                                  <User className="h-4 w-4" />
+                                  <span>Notifications</span>
+                                </Link>
+                              </SidebarMenuButton>
+                            </SidebarMenuItem>
+              {/* <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link href="/teacher/settings">
+                    <Settings className="h-4 w-4" />
+                    <span>Settings</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem> */}
+
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <button onClick={handleLogout}>
+                    <span className="">Log Out</span>
+                  </button>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarContent>
+          <SidebarFooter className="p-4">
+            <div className="flex items-center gap-3">
+              <Image
+                src="/placeholder.svg?height=40&width=40"
+                width={40}
+                height={40}
+                alt="User avatar"
+                className="rounded-full"
+              />
+              <div className="flex flex-col text-[#f8fafc]">
+                <span className="text-sm font-medium">
+                  {instructor.fullname}
+                </span>
+                <span className="text-xs ">
+                  {instructor.email}
+                </span>
+              </div>
+            </div>
+          </SidebarFooter>
+        </Sidebar>
                        <SidebarTrigger className="h-10 w-10 ml-[30px] mt-[30px] lg:hidden border border-gray-300 rounded-md flex items-center justify-center">
                        <PanelLeft className="h-4 w-4" />
                      </SidebarTrigger>
