@@ -271,7 +271,7 @@ export default function Home() {
 
 
       ))} */}
-          <div className="bg-[lightblue] h-[100px] flex items-center pl-[50px]">
+          {/* <div className="bg-[lightblue] h-[100px] flex items-center pl-[50px]">
             <div className="text-white">
               <div>
                 <p>Total Balance</p>
@@ -284,7 +284,26 @@ export default function Home() {
                 </Link>
               </div>
             </div>
-          </div>
+          </div> */}
+                   
+
+                   <div className="max-w-[100%] rounded-2xl bg-[#3b92e3] p-6 text-white">
+  <div className="flex flex-col">
+    <p className="text-lg font-light mb-1">Total Balance</p>
+    <p className="text-4xl font-medium mb-6">
+      ₦{parseFloat(instructor.wallet.balance).toFixed(2)}
+    </p>
+    
+    <Link href="/teacher/dashboard/request">
+      <div className="w-full bg-[#5ca3e6] bg-opacity-40 hover:bg-opacity-50 py-4 px-5 rounded-xl flex items-center transition">
+        <svg className="w-6 h-6 mr-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 15v3H6v-3M12 16V4M12 4l4 4M12 4L8 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+        <span className="font-medium text-lg">Withdraw</span>
+      </div>
+    </Link>
+  </div>
+</div>
 
           {Array.isArray(transactions) && transactions.length > 0 ? (
             transactions.map((tx, idx) => <TransactionItem key={idx} {...tx} />)

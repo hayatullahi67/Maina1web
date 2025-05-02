@@ -511,34 +511,80 @@ const ContactForm: React.FC = () => {
     }));
   };
 
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+    
+  //   if (!isFormValid) return;
+    
+  //   setIsSubmitting(true);
+    
+  //   try {
+  //     // The email address where you want to receive messages
+  //     const ownerEmail = "Victorkelechi044@gmail.com"; // Change this to your email
+      
+  //     // Encode subject and body for mailto
+  //     const subject = encodeURIComponent(formData.subject);
+  //     const body = encodeURIComponent(
+  //       `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
+  //     );
+      
+  //     // Construct mailto link
+  //     const mailtoLink = `mailto:${ownerEmail}?subject=${subject}&body=${body}`;
+      
+  //     // Open the user's default mail client
+  //     window.location.href = mailtoLink;
+      
+  //     setSubmitStatus({
+  //       success: true,
+  //       message: "Email client opened. Please send the email to complete your message."
+  //     });
+      
+  //     // Reset form after successful submission
+  //     setFormData({
+  //       name: "",
+  //       email: "",
+  //       subject: "",
+  //       message: ""
+  //     });
+  //   } catch (error) {
+  //     console.error("Failed to open email client:", error);
+  //     setSubmitStatus({
+  //       success: false,
+  //       message: "Failed to open email client. Please try again later."
+  //     });
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
+
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+  
     if (!isFormValid) return;
-    
+  
     setIsSubmitting(true);
-    
+  
     try {
-      // The email address where you want to receive messages
-      const ownerEmail = "Victorkelechi044@gmail.com"; // Change this to your email
-      
-      // Encode subject and body for mailto
+      const ownerEmail = "Victorkelechi044@gmail.com"; // Change if needed
+  
+      // Encode subject and body for URL
       const subject = encodeURIComponent(formData.subject);
       const body = encodeURIComponent(
         `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
       );
-      
-      // Construct mailto link
-      const mailtoLink = `mailto:${ownerEmail}?subject=${subject}&body=${body}`;
-      
-      // Open the user's default mail client
-      window.location.href = mailtoLink;
-      
+  
+      // Gmail compose link
+      const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${ownerEmail}&su=${subject}&body=${body}`;
+  
+      // Open Gmail in a new tab (recommended)
+      window.open(gmailLink, "_blank");
+  
       setSubmitStatus({
         success: true,
-        message: "Email client opened. Please send the email to complete your message."
+        message: "Gmail opened. Please send the email to complete your message."
       });
-      
+  
       // Reset form after successful submission
       setFormData({
         name: "",
@@ -547,16 +593,16 @@ const ContactForm: React.FC = () => {
         message: ""
       });
     } catch (error) {
-      console.error("Failed to open email client:", error);
+      console.error("Failed to open Gmail:", error);
       setSubmitStatus({
         success: false,
-        message: "Failed to open email client. Please try again later."
+        message: "Failed to open Gmail. Please try again later."
       });
     } finally {
       setIsSubmitting(false);
     }
   };
-
+  
   return (
     <>
     <Header/>
@@ -640,8 +686,7 @@ const ContactForm: React.FC = () => {
                   ? "bg-blue hover:bg-blue" 
                   : "bg-gray cursor-not-allowed"}`}
             >
-              <a href="mailto:Victorkelechi044@gmail.com">{isSubmitting ? "OPENING EMAIL CLIENT..." : "SEND A MESSAGE"}</a>
-              
+                {isSubmitting ? "OPENING EMAIL CLIENT..." : "SEND A MESSAGE"}
             </button>
             
             {submitStatus && (
