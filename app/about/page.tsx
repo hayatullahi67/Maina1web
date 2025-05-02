@@ -41,14 +41,17 @@ export default function AboutPage() {
                   engaging.
                 </p>
                 <Button className="bg-white text-[#2563eb] hover:bg-white/90 font-medium px-6 py-2 rounded-full">
-                  START FREE TRIAL
+                  
+                  <Link href="/register">START FREE TRIAL</Link>
                 </Button>
               </div>
-              <div className="relative aspect-video bg-white/20 rounded-lg flex items-center justify-center mt-4 md:mt-0">
-                <div className="absolute inset-0 bg-white/10 rounded-lg"></div>
+              <div className="   rounded-lg  mt-4 md:mt-0">
+                {/* <div className="absolute inset-0 bg-white/10 rounded-lg"></div>
                 <button className="relative z-10 bg-[#2563eb] hover:bg-[#1e4bb8] transition-colors rounded-full p-4 text-white">
                   <FaPlay className="w-8 h-8 text-white" />
-                </button>
+                </button> */}
+                <Image width={400}  height={400} src='/images/online.webp' alt="web" className="w-[100%]" />
+                 
               </div>
             </div>
           </div>
