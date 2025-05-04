@@ -757,6 +757,13 @@ export default function StudentDashboard() {
                             >
                               Enroll
                             </Button>
+                            <Link href={`/student/dashboard/preview/${course.id}`}>
+                            <Button
+                              // onClick={() => enrollCourse(course.id)}
+                              size="sm"
+                            >
+                              preview
+                            </Button></Link>
                           </div>
                         </CardContent>
                       </Card>
