@@ -34,6 +34,8 @@ import {
   User,
   Users,
 } from "lucide-react";
+import { toast } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 // import Image from "next/image";
 
 type Question = {
@@ -398,41 +400,41 @@ export default function CourseManagementPage() {
 
   const validateForm = () => {
     if (!courseName.trim()) {
-      alert("Please enter a course name");
+      toast.error("Please enter a course name");
       return false;
     }
 
     if (!coursePrice.trim() || isNaN(Number.parseFloat(coursePrice))) {
-      alert("Please enter a valid price");
+      toast.error("Please enter a valid price");
       return false;
     }
 
     if (categories.length === 0) {
-      alert("Please add at least one category");
+      toast.error("Please add at least one category");
       return false;
     }
 
     if (!description.trim()) {
-      alert("Please enter a course description");
+      toast.error("Please enter a course description");
       return false;
     }
 
     if (!imagePreview) {
-      alert("Please upload a course thumbnail");
+      toast.error("Please upload a course thumbnail");
       return false;
     }
 
     // Validate objectives
     const invalidObjectives = objectives.some((obj) => !obj.title.trim());
     if (invalidObjectives) {
-      alert("All learning objectives must have a title");
+      toast.error("All learning objectives must have a title");
       return false;
     }
 
     // Validate modules
     const invalidModules = modules.some((module) => !module.title.trim());
     if (invalidModules) {
-      alert("All modules must have a title");
+      toast.error("All modules must have a title");
       return false;
     }
 
@@ -441,7 +443,7 @@ export default function CourseManagementPage() {
       (module) => module.lessons.length === 0
     );
     if (modulesWithoutLessons) {
-      alert("Each module must have at least one lesson");
+      toast.error("Each module must have at least one lesson");
       return false;
     }
 
@@ -451,17 +453,204 @@ export default function CourseManagementPage() {
       )
     );
     if (invalidLessons) {
-      alert("All lessons must have a title and video");
+      toast.error("All lessons must have a title and video");
       return false;
     }
 
     return true;
   };
 
+  // const handleSubmit = async () => {
+  //   if (!validateForm()) return;
+
+  //   setIsSubmitting(true);
+
+  //   try {
+  //     // Step 1: Create the course
+  //     const courseData = {
+  //       name: courseName,
+  //       price: Number.parseFloat(coursePrice),
+  //       category: categories,
+  //       description,
+  //       objectives: objectives.map((obj) => ({
+  //         title: obj.title,
+  //         description: obj.description,
+  //       })),
+  //       modules: modules.map((module) => ({
+  //         title: module.title,
+  //         description: module.description,
+  //         lessons: module.lessons.map((lesson) => ({
+  //           title: lesson.title,
+  //         })),
+  //       })),
+  //     };
+
+  //     const courseResponse = await fetch(
+  //       `https://api.a1schools.org/courses?instructor_id=${instructor.id}`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${instructor.token}`,
+  //         },
+  //         body: JSON.stringify(courseData),
+  //       }
+  //     );
+
+  //     if (!courseResponse.ok) {
+  //       const errorData = await courseResponse.json();
+  //       throw new Error(
+  //         `Failed to create course: ${errorData.detail || "Unknown error"}`
+  //       );
+  //     }
+
+  //     const courseResult = await courseResponse.json();
+  //     const courseId = courseResult.data.id;
+
+  //     // Step 2: Upload course image
+  //     if (imageFile) {
+  //       const imageFormData = new FormData();
+  //       imageFormData.append("image", imageFile);
+
+  //       const imageResponse = await fetch(
+  //         `https://api.a1schools.org/courses/${courseId}/upload-image`,
+  //         {
+  //           method: "POST",
+  //           headers: {
+  //             Authorization: `Bearer ${instructor.token}`,
+  //           },
+  //           body: imageFormData,
+  //         }
+  //       );
+
+  //       if (!imageResponse.ok) {
+  //         console.error("Failed to upload course image");
+  //       }
+  //     }
+
+  //     // Step 3: Create modules and lessons
+  //     for (const m of modules) {
+  //       // Create module
+  //       const moduleResponse = await fetch(
+  //         `https://api.a1schools.org/courses/${courseId}/modules`,
+  //         {
+  //           method: "POST",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //             Authorization: `Bearer ${instructor.token}`,
+  //           },
+  //           body: JSON.stringify({
+  //             title: m.title,
+  //             description: m.description,
+  //           }),
+  //         }
+  //       );
+
+  //       if (!moduleResponse.ok) {
+  //         console.error(`Failed to create module: ${m.title}`);
+  //         continue;
+  //       }
+
+  //       const moduleResult = await moduleResponse.json();
+  //       const moduleId = moduleResult.data.id;
+
+  //       // Create lessons for this module
+  //       for (const lesson of m.lessons) {
+  //         const lessonResponse = await fetch(
+  //           `https://api.a1schools.org/courses/${courseId}/modules/${moduleId}/lessons`,
+  //           {
+  //             method: "POST",
+  //             headers: {
+  //               "Content-Type": "application/json",
+  //               Authorization: `Bearer ${instructor.token}`,
+  //             },
+  //             body: JSON.stringify({
+  //               title: lesson.title,
+  //             }),
+  //           }
+  //         );
+
+  //         if (!lessonResponse.ok) {
+  //           console.error(`Failed to create lesson: ${lesson.title}`);
+  //           continue;
+  //         }
+
+  //         const lessonResult = await lessonResponse.json();
+  //         const lessonId = lessonResult.data.id;
+
+  //         // Upload video for this lesson
+  //         if (lesson.file) {
+  //           const videoFormData = new FormData();
+  //           videoFormData.append("video", lesson.file);
+
+  //           const videoResponse = await fetch(
+  //             `https://api.a1schools.org/courses/${courseId}/modules/${moduleId}/lessons/${lessonId}/upload-video`,
+  //             {
+  //               method: "POST",
+  //               headers: {
+  //                 Authorization: `Bearer ${instructor.token}`,
+  //               },
+  //               body: videoFormData,
+  //             }
+  //           );
+
+  //           if (!videoResponse.ok) {
+  //             console.error(
+  //               `Failed to upload video for lesson: ${lesson.title}`
+  //             );
+  //           }
+  //         }
+  //       }
+
+  //       // Create quiz for this module if there are questions
+  //       if (questions.length > 0) {
+  //         const quizData = {
+  //           questions: questions.map((q) => ({
+  //             question: q.text,
+  //             options: q.options.map((opt) => ({
+  //               value: opt.value,
+  //               answer: opt.answer,
+  //             })),
+  //           })),
+  //         };
+
+  //         const quizResponse = await fetch(
+  //           `https://api.a1schools.org/courses/${courseId}/modules/${moduleId}/quiz`,
+  //           {
+  //             method: "POST",
+  //             headers: {
+  //               "Content-Type": "application/json",
+  //               Authorization: `Bearer ${instructor.token}`,
+  //             },
+  //             body: JSON.stringify(quizData),
+  //           }
+  //         );
+
+  //         if (!quizResponse.ok) {
+  //           console.error("Failed to create quiz");
+  //         }
+  //       }
+  //     }
+
+  //     alert("Course created successfully!");
+  //     router.push("/teacher/dashboard");
+  //   } catch (error) {
+  //     console.error("Error creating course:", error);
+  //     alert(
+  //       `Failed to create course: ${
+  //         error instanceof Error ? error.message : "Unknown error"
+  //       }`
+  //     );
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
+
   const handleSubmit = async () => {
     if (!validateForm()) return;
 
     setIsSubmitting(true);
+    const errors: string[] = [];
 
     try {
       // Step 1: Create the course
@@ -497,9 +686,11 @@ export default function CourseManagementPage() {
 
       if (!courseResponse.ok) {
         const errorData = await courseResponse.json();
-        throw new Error(
+        toast.error(
           `Failed to create course: ${errorData.detail || "Unknown error"}`
         );
+        setIsSubmitting(false);
+        return;
       }
 
       const courseResult = await courseResponse.json();
@@ -522,7 +713,7 @@ export default function CourseManagementPage() {
         );
 
         if (!imageResponse.ok) {
-          console.error("Failed to upload course image");
+          errors.push("Failed to upload course image.");
         }
       }
 
@@ -545,7 +736,7 @@ export default function CourseManagementPage() {
         );
 
         if (!moduleResponse.ok) {
-          console.error(`Failed to create module: ${m.title}`);
+          errors.push(`Failed to create module: ${m.title}`);
           continue;
         }
 
@@ -569,7 +760,7 @@ export default function CourseManagementPage() {
           );
 
           if (!lessonResponse.ok) {
-            console.error(`Failed to create lesson: ${lesson.title}`);
+            errors.push(`Failed to create lesson: ${lesson.title}`);
             continue;
           }
 
@@ -593,9 +784,7 @@ export default function CourseManagementPage() {
             );
 
             if (!videoResponse.ok) {
-              console.error(
-                `Failed to upload video for lesson: ${lesson.title}`
-              );
+              errors.push(`Failed to upload video for lesson: ${lesson.title}`);
             }
           }
         }
@@ -625,17 +814,31 @@ export default function CourseManagementPage() {
           );
 
           if (!quizResponse.ok) {
-            console.error("Failed to create quiz");
+            errors.push(`Failed to create quiz for module: ${m.title}`);
           }
         }
       }
 
-      alert("Course created successfully!");
-      router.push("/teacher/dashboard");
+      // Show toast based on errors
+      if (errors.length > 0) {
+        toast.error(
+          <div>
+            <b>Course created with some issues:</b>
+            <ul style={{ margin: 0, paddingLeft: 16 }}>
+              {errors.map((err, i) => (
+                <li key={i}>{err}</li>
+              ))}
+            </ul>
+          </div>,
+          { duration: 8000 }
+        );
+      } else {
+        toast.success("Course created successfully!");
+        router.push("/teacher/dashboard");
+      }
     } catch (error) {
-      console.error("Error creating course:", error);
-      alert(
-        `Failed to create course: ${
+      toast.error(
+        `An unexpected error occurred: ${
           error instanceof Error ? error.message : "Unknown error"
         }`
       );
@@ -644,9 +847,11 @@ export default function CourseManagementPage() {
     }
   };
 
+
   return (
     <>
       <SidebarProvider>
+      <Toaster position="top-right" />
        <Sidebar className="bg-[#1e293b]">
                  <SidebarHeader className="flex text-[#f8fafc] items-center gap-2 px-4">
                    <BookOpen className="h-6 w-6 text-primary" />
