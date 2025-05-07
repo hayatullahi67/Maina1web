@@ -73,6 +73,13 @@ export default function CourseCard({ course }: CourseCardProps) {
               {/* <Badge className="transition-colors hover:bg-primary/90">
                 Enroll Now
               </Badge> */}
+               {/* <Link href={`/preview/${course.id}`}>
+                                          <Badge
+                                            // onClick={() => enrollCourse(course.id)}
+                                            className="transition-colors hover:bg-primary/90"
+                                          >
+                                            preview
+                                          </Badge></Link> */}
             </div>
           </CardFooter>
           

@@ -694,7 +694,7 @@ export default function TeacherDashboard() {
         });
       } else {
         const errorData = await response.json();
-        console.error('Delete failed:', errorData.message);
+        console.error('Delete failed:', errorData.data.message);
         toast.error('Failed to delete course: ' + (errorData.message || 'Unknown error'));
       }
     } catch (error) {
@@ -973,14 +973,25 @@ export default function TeacherDashboard() {
                               Last updated:{" "}
                               {new Date(course.updated_at).toLocaleDateString()}
                             </span>
+                              
+                             
+                            {course.students === 0 && (
+        <Button
+          size="sm"
+          className="bg-[red] hover:bg-[#ff0000cc]"
+          onClick={() => handleDeleteCourse(course.id)}
+        >
+          Delete
+        </Button>
+      )}
 
-                            <Button 
+                            {/* <Button 
                                size="sm" 
                                className="bg-[red] hover:bg-[#ff0000cc]"
                                onClick={() => handleDeleteCourse(course.id)}
                              >
                                Delete
-                             </Button>
+                             </Button> */}
 
                             <Button onClick={() =>
                           router.push(`/teacher/dashboard/edit/${course.id}`)
